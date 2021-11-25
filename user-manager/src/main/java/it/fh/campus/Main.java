@@ -1,5 +1,7 @@
 package it.fh.campus;
 
+import it.fh.campus.service.UserServiceImpl;
+
 public class Main {
     static String key;
 
@@ -9,7 +11,7 @@ public class Main {
 
         AES.setKey(key);
         UserFileHandler.initParser();
-        ClGui.startUserManager();
+        new ClGui(new UserServiceImpl());
     }
 
     public static String getKey() {

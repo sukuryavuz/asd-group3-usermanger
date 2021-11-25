@@ -18,14 +18,12 @@ public class UserFileHandler {
         try {
             Object obj = new JSONParser().parse(new FileReader("user-manager/src/main/resources/userFile.json"));
             jo = (JSONArray) obj;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean isCorrectUsernameAndPw(String username, String password) {
+    public static JSONObject findUserByUsernameAndPassword(String username, String password) {
         Iterator i = jo.iterator();
         String key = Main.getKey();
 
@@ -36,9 +34,9 @@ public class UserFileHandler {
             String decryptedPw = AES.decrypt(pw, key);
 
             if (usrname.equals(username) && decryptedPw.equals(password)) {
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
 }
