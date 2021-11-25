@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class ClGui {
 
-    private final UserService userService;
+    public final UserService userService;
 
     public ClGui(UserService userService) {
         this.userService = userService;
         printStartPage();
     }
 
-    private void printStartPage() {
+    public void printStartPage() {
         while (true) {
             System.out.println("Welcome to UserManager!");
             System.out.println("1 - Create Account");
@@ -38,7 +38,7 @@ public class ClGui {
         }
     }
 
-    private void printLoggedInPage(User user) {
+    public void printLoggedInPage(User user) {
         while (true) {
             System.out.println("Welcome " + user.getFirstname() + " " + user.getLastname() + "!");
             System.out.println("1 - Log Out");
@@ -63,20 +63,32 @@ public class ClGui {
         }
     }
 
-    private void handleCreateAccount() {
+    public void handleCreateAccount() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter your firstname: ");
-        String firstname = scanner.nextLine();
-        System.out.println("Please enter your lastname: ");
-        String lastname = scanner.nextLine();
-        System.out.println("Please enter your username: ");
-        String username = scanner.nextLine();
-        System.out.println("Please enter your password: ");
-        String password = scanner.nextLine();
-        userService.createAccount(firstname, lastname, username, password);
+
+        boolean condition = true;
+        while(condition) {
+            System.out.println("Please enter your username: ");
+            String username = scanner.nextLine();
+
+            if(UserFileHandler.IsUsernameValid(username)){
+                System.out.println("Please enter your firstname: ");
+                String firstname = scanner.nextLine();
+
+                System.out.println("Please enter your lastname: ");
+                String lastname = scanner.nextLine();
+
+                System.out.println("Please enter your password: ");
+                String password = scanner.nextLine();
+                userService.createAccount(firstname, lastname, username, password);
+                condition = false;
+            }
+        }
+
+
     }
 
-    private void handleLogin() {
+    public void handleLogin() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter username: ");
         String username = scanner.nextLine();
@@ -98,7 +110,8 @@ public class ClGui {
         //TODO:
     }
 
-    private void handleDeleteAccount(User user) {
+    public void handleDeleteAccount(User user) {
         //TODO:
     }
+
 }
