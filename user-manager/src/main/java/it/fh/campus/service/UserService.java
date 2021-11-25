@@ -2,9 +2,11 @@ package it.fh.campus.service;
 
 import it.fh.campus.entities.User;
 
+import java.io.IOException;
+
 public interface UserService {
 
-    User createAccount(String firstname, String lastname, String username, String password);
+    boolean createAccount(String firstname, String lastname, String username, String password) throws IOException;
 
     boolean deleteAccount(User user);
 
