@@ -40,10 +40,10 @@ public class ClGui {
 
     private void printLoggedInPage(User user) {
         while (true) {
-            System.out.println("Welcome " + user.getFirstname() + " " + user.getLastname() + "!");
-            System.out.println("1 - Log Out");
-            System.out.println("2 - Change Password");
-            System.out.println("3 - Delete Account");
+            System.out.println("Willkommen " + user.getFirstname() + " " + user.getLastname() + "!");
+            System.out.println("1 - Log out");
+            System.out.println("2 - Passwort ändern");
+            System.out.println("3 - Account löschen");
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
