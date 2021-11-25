@@ -14,7 +14,7 @@ public class ClGui {
         printStartPage();
     }
 
-    public void printStartPage() {
+    private void printStartPage() {
         while (true) {
             System.out.println("Willkommen im UserManager!");
             System.out.println("1 - Account erstellen");
@@ -38,7 +38,7 @@ public class ClGui {
         }
     }
 
-    public void printLoggedInPage(User user) {
+    private void printLoggedInPage(User user) {
         while (true) {
             System.out.println("Welcome " + user.getFirstname() + " " + user.getLastname() + "!");
             System.out.println("1 - Log Out");
@@ -63,7 +63,7 @@ public class ClGui {
         }
     }
 
-    public void handleCreateAccount() {
+    private void handleCreateAccount() {
         Scanner scanner = new Scanner(System.in);
 
         boolean condition = true;
