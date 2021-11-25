@@ -24,36 +24,6 @@ public class UserFileHandler {
             e.printStackTrace();
         }
     }
-    public static boolean IsUsernameValid(String username){
-        Iterator i = jo.iterator();
-        String key = Main.getKey();
-
-        while(i.hasNext()) {
-            JSONObject user = (JSONObject) i.next();
-            String usrname = (String) user.get("username");
-            if(usrname.equals(username)){
-                System.out.println("Dieser Username existiert bereits!");
-                return false;
-            }
-        } return true;
-    }
-
-    public static JSONObject findUserByUsernameAndPassword(String username, String password) {
-        Iterator i = jo.iterator();
-        String key = Main.getKey();
-
-        while (i.hasNext()) {
-            JSONObject user = (JSONObject) i.next();
-            String usrname = (String) user.get("username");
-            String pw = (String) user.get("password");
-            String decryptedPw = AES.decrypt(pw, key);
-
-            if (usrname.equals(username) && decryptedPw.equals(password)) {
-                return user;
-            }
-        }
-        return null;
-    }
 
     public static JSONObject findUserByUsername(String username) {
         for (Object o : jo) {

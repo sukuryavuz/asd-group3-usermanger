@@ -15,15 +15,15 @@ public class UserServiceImpl implements UserService {
     private final String key = Main.getKey();
 
     @Override
-    public boolean createAccount(String firstname, String lastname, String username, String password) throws IOException {
-        JSONObject searchedUser =  UserFileHandler.findUserByUsername(username);
-        if (searchedUser != null){
-            return false;
-        }
+    public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
         User user = new User(firstname, lastname, username, AES.encrypt(password, key));
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.addUser(userJson);
-        return true;
+    }
+
+    @Override
+    public boolean isUsernameUnique(String username) {
+        return UserFileHandler.findUserByUsername(username) == null ? true : false;
     }
 
     @Override
@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService {
     public User login(String username, String password) {
         JSONObject userJson = UserFileHandler.findUserByUsername(username);
         User user = JsonToUserMapper.map(userJson);
-        if (user != null && password.equals(AES.decrypt(user.getPassword(), key))){
+        if (user != null && password.equals(AES.decrypt(user.getPassword(), key))) {
+            //set timer
             return user;
         }
         return null;

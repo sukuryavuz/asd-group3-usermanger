@@ -3,6 +3,7 @@ package it.fh.campus;
 import it.fh.campus.entities.User;
 import it.fh.campus.service.UserService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ClGui {
@@ -65,26 +66,29 @@ public class ClGui {
 
     private void handleCreateAccount() {
         Scanner scanner = new Scanner(System.in);
-
-        boolean condition = true;
-        while(condition) {
+        String username;
+        while (true) {
             System.out.println("Geben Sie Bitte einen Usernamen ein: ");
-            String username = scanner.nextLine();
-
-            if(UserFileHandler.IsUsernameValid(username)){
-                System.out.println("Geben Sie Bitte Ihren Vornamen ein: ");
-                String firstname = scanner.nextLine();
-
-                System.out.println("Geben Sie Bitte Ihren Nachnamen ein: ");
-                String lastname = scanner.nextLine();
-
-                System.out.println("Geben Sie Bitte Ihr Passwort ein: ");
-                String password = scanner.nextLine();
-                condition = false;
+            username = scanner.nextLine();
+            if (userService.isUsernameUnique(username)) {
+                break;
+            } else {
+                System.out.println("Username bereits vergeben!");
             }
         }
-
-
+        System.out.println("Geben Sie Bitte Ihren Vornamen ein: ");
+        String firstname = scanner.nextLine();
+        System.out.println("Geben Sie Bitte Ihren Nachnamen ein: ");
+        String lastname = scanner.nextLine();
+        System.out.println("Geben Sie Bitte Ihr Passwort ein: ");
+        String password = scanner.nextLine();
+        try {
+            userService.createAccount(firstname, lastname, username, password);
+            User user = userService.login(username, password);
+            printLoggedInPage(user);
+        } catch (IOException e) {
+            System.out.println("Etwas ist schief gelaufen!");
+        }
     }
 
     private void handleLogin() {
