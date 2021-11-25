@@ -68,19 +68,18 @@ public class ClGui {
 
         boolean condition = true;
         while(condition) {
-            System.out.println("Please enter your username: ");
+            System.out.println("Geben Sie Bitte einen Usernamen ein: ");
             String username = scanner.nextLine();
 
             if(UserFileHandler.IsUsernameValid(username)){
-                System.out.println("Please enter your firstname: ");
+                System.out.println("Geben Sie Bitte Ihren Vornamen ein: ");
                 String firstname = scanner.nextLine();
 
-                System.out.println("Please enter your lastname: ");
+                System.out.println("Geben Sie Bitte Ihren Nachnamen ein: ");
                 String lastname = scanner.nextLine();
 
-                System.out.println("Please enter your password: ");
+                System.out.println("Geben Sie Bitte Ihr Passwort ein: ");
                 String password = scanner.nextLine();
-                userService.createAccount(firstname, lastname, username, password);
                 condition = false;
             }
         }
