@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class ClGui {
 
-    public final UserService userService;
+    private final UserService userService;
 
     public ClGui(UserService userService) {
         this.userService = userService;
@@ -16,10 +16,10 @@ public class ClGui {
 
     public void printStartPage() {
         while (true) {
-            System.out.println("Welcome to UserManager!");
-            System.out.println("1 - Create Account");
+            System.out.println("Willkommen im UserManager!");
+            System.out.println("1 - Account erstellen");
             System.out.println("2 - Login");
-            System.out.println("3 - Exit");
+            System.out.println("3 - Beenden");
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
@@ -32,7 +32,7 @@ public class ClGui {
                 case 3:
                     return;
                 default:
-                    System.out.println("Please enter a valid number");
+                    System.out.println("Bitte treffen Sie eine gültige Auswahl!");
                     break;
             }
         }
@@ -55,9 +55,9 @@ public class ClGui {
                     break;
                 case 3:
                     handleDeleteAccount(user);
-                    break;
+                    return;
                 default:
-                    System.out.println("Please enter a valid number");
+                    System.out.println("Bitte treffen Sie eine gültige Auswahl!");
                     break;
             }
         }
@@ -88,17 +88,17 @@ public class ClGui {
 
     }
 
-    public void handleLogin() {
+    private void handleLogin() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter username: ");
+        System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
         String username = scanner.nextLine();
-        System.out.println("Please enter password: ");
+        System.out.println("Bitte geben Sie Ihr Passwort ein: ");
         String password = scanner.nextLine();
         User user = userService.login(username, password);
         if (user != null) {
             printLoggedInPage(user);
         } else {
-            System.out.println("Username or Password not correct");
+            System.out.println("Username oder Passwort nicht korrekt!");
         }
     }
 
@@ -113,5 +113,4 @@ public class ClGui {
     public void handleDeleteAccount(User user) {
         //TODO:
     }
-
 }

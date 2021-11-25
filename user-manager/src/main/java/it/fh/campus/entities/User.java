@@ -7,6 +7,17 @@ public class User {
     private String username;
     private String password;
 
+    public User(String firstname, String lastname, String username, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+        // empty
+    }
+
     public String getFirstname() {
         return firstname;
     }
