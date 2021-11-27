@@ -55,5 +55,22 @@ public class HelloController {
 
     @FXML
     public void handleNewUserAction(ActionEvent actionEvent) {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(ResetPassword.class.getResource("new-user.fxml"));
+
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        //set what you want on your stage
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Hello new user!");
+        stage.setScene(new Scene(root1));
+        stage.setResizable(false);
+        stage.show();
+
     }
 }

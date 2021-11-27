@@ -12,22 +12,22 @@
 
     <Label text="Name: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label text="Surname: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label  text="Surname: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="surname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label  text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <PasswordField fx:id="passwordField1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Label text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="4" />
 
-    <PasswordField fx:id="passwordField2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
     <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button onAction="#handleResetAction" text="Create User" />
+        <Button onAction="#handleCreateUserAction" text="Create User" />
     </HBox>
 
 

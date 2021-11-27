@@ -29,15 +29,21 @@
                    GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <HBox alignment="bottom_right"
-          GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <Button text="Reset Password"
-                onAction="#handleResetAction"/>
-    </HBox>
-
-    <HBox alignment="bottom_right"
           GridPane.columnIndex="1" GridPane.rowIndex="4">
         <Button text="Sign In"
                 onAction="#handleSubmitButtonAction"/>
+    </HBox>
+
+    <HBox alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button text="Reset Password"
+                onAction="#handleResetPasswordAction"/>
+    </HBox>
+
+    <HBox alignment="bottom_left"
+          GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <Button text="New User"
+                onAction="#handleNewUserAction"/>
     </HBox>
 
     <Text fx:id="actiontarget"
