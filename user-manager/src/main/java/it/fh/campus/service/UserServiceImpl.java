@@ -27,9 +27,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteAccount(User user) {
-        return false;
-    }
+    public void deleteAccount(User user) throws IOException {
+        JSONObject userJson = UserToJsonMapper.map(user);
+        UserFileHandler.removeUser(userJson); }
 
     @Override
     public User login(String username, String password) {

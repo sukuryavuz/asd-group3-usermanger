@@ -56,7 +56,7 @@ public class ClGui {
                     break;
                 case 3:
                     handleDeleteAccount(user);
-                    return;
+                    break;
                 default:
                     System.out.println("Bitte treffen Sie eine gültige Auswahl!");
                     break;
@@ -114,6 +114,28 @@ public class ClGui {
     }
 
     public void handleDeleteAccount(User user) {
-        //TODO:
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Möchten Sie Ihren Account wirklich löschen? (y oder n): ");
+        while (true) {
+            String inputDeleteAcc = scanner.next();
+            switch (inputDeleteAcc) {
+                case "y":
+                    try {
+                        userService.deleteAccount(user);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Ihr Account mit dem Usernamen " + user.getUsername() + " wurde erfolgreich gelöscht");
+                    printStartPage();
+                    break;
+                case "n":
+                    System.out.println("Ihr Account wird nicht gelöscht");
+                    printLoggedInPage(user);
+                    break;
+                default:
+                    System.out.println("Bitte tippen Sie 'y' oder 'n': ");
+                    break;
+            }
+        }
     }
 }

@@ -42,4 +42,12 @@ public class UserFileHandler {
         file.flush();
         file.close();
     }
+
+    public static void removeUser(JSONObject user) throws IOException {
+        jo.remove(user);
+        FileWriter file = new FileWriter(FILE_PATH);
+        file.write(jo.toJSONString());
+        file.flush();
+        file.close();
+    }
 }

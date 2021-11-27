@@ -10,7 +10,7 @@ public interface UserService {
 
     boolean isUsernameUnique(String username);
 
-    boolean deleteAccount(User user);
+    void deleteAccount(User user) throws IOException;
 
     User login(String username, String password);
 
