@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -37,6 +38,9 @@ public class NewUser {
 
         System.out.println(name.getText() + " " + surname.getText() + " " + username.getText() + " " + passwordField.getText());
         insertNewUser();
+        Node node = (Node) actionEvent.getSource();
+        Stage stageOld = (Stage) node.getScene().getWindow();
+        stageOld.close();
     }
 
 
@@ -84,7 +88,7 @@ public class NewUser {
                 file.createNewFile();
             }
 
-            byte[] contentInBytes = (username.getText() + "=" + passwordField.getText() + " \n").getBytes();
+            byte[] contentInBytes = (username.getText() + "=" + passwordField.getText() + "\n").getBytes();
             fop.write(contentInBytes);
 
             fop.flush();
