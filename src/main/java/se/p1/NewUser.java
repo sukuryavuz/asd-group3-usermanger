@@ -36,7 +36,6 @@ public class NewUser {
        // setError(name,false);
 
         System.out.println(name.getText() + " " + surname.getText() + " " + username.getText() + " " + passwordField.getText());
-
         insertNewUser();
     }
 
@@ -79,14 +78,13 @@ public class NewUser {
     private void insertNewUser(){
         File file = new File("password.properties");
         try {
-            FileOutputStream fop = new FileOutputStream(file);
+            //true, appends to the file
+            FileOutputStream fop = new FileOutputStream(file,true);
             if (!file.exists()) {
                 file.createNewFile();
             }
 
-            byte[] contentInBytes = (passwordField.getText() + "\n").getBytes();
-
-            fop.write(contentInBytes);
+            byte[] contentInBytes = (username.getText() + "=" + passwordField.getText() + " \n").getBytes();
             fop.write(contentInBytes);
 
             fop.flush();
@@ -99,9 +97,6 @@ public class NewUser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        byte[] contentInBytes = passwordField.getText().getBytes(StandardCharsets.UTF_8);
 
     }
 

@@ -12,7 +12,7 @@
 
     <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="userName"    GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
