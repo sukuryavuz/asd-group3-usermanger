@@ -22,23 +22,14 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    TextField username;
-
-    @FXML
-    PasswordField passwordField;
-
-    @FXML
-    protected void onHelloButtonClick() {
+    @FXML private Label welcomeText;
+    @FXML TextField username;
+    @FXML PasswordField passwordField;
+    @FXML protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to the Application!");
     }
-
-
-    @FXML
-    private Text actiontarget;
+    @FXML private Text actiontarget;
+    private int counter= 0;
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) {
@@ -70,8 +61,15 @@ public class HelloController {
         }else{
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("username oder password nicht korrekt");
+
+            if (counter == 2){
+                a.showAndWait();
+                System.exit(0);
+            }
             a.show();
+            counter++;
         }
+
     }
 
     private void showStage(ActionEvent event) {
