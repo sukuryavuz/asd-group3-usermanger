@@ -57,7 +57,7 @@ public class ResetPassword {
             stageOld.close();
         }else if(!passwordFieldNew.equals(passwordFieldNew2)){
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Die 2 neu eingegebenen Passwörter stimmen nicht überein!");
+            a.setContentText("Kennwörter nicht gleich!");
             a.show();
         }
 
