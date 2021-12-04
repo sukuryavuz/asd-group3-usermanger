@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dfa7bd1-968b-46af-b349-9a6ea483960d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_7_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_7_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_7_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_7_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="811670c7-cc53-4ea0-9f1f-2050dc6aa2cf" name="Changes" comment="changed access modifier back to private">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/ClGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/ClGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/UserFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/UserFileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/CommandLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/CommandLine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-manager/src/main/resources/userFile.json" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/resources/userFile.json" afterDir="false" />
@@ -69,7 +57,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="gradleInit" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

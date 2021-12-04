@@ -48,7 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(User user, String newPassword) {
-        return false;
-    }
+    public void changePassword(User user, String newPassword) throws IOException {
+        JSONObject userJson = UserFileHandler.findUserByUsername(user.getUsername());
+        User user2 = JsonToUserMapper.map(userJson);
+        user2.setPassword(Rijndael.encrypt(newPassword, key));
+        UserFileHandler.removeUser(userJson);
+        UserFileHandler.addUser(UserToJsonMapper.map(user2));
+
+        }
 }
