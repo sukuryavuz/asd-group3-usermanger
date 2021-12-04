@@ -109,26 +109,7 @@ public class HelloController {
         return properties;
     }
 
-    @FXML
-    public void handleResetPasswordAction(ActionEvent actionEvent) {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(ResetPassword.class.getResource("reset-password.fxml"));
-
-        Parent root1 = null;
-        try {
-            root1 = (Parent) fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Reset Password");
-        stage.setScene(new Scene(root1));
-        stage.setResizable(false);
-        stage.show();
-
-
-    }
 
     private void hideStage(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();

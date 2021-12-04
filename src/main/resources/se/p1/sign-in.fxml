@@ -14,8 +14,14 @@
 
     <TextField fx:id="userName"    GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
+    <HBox alignment="bottom_left" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="5">
         <Button onAction="#handleLogOutAction" text="Log out " />
+    </HBox>
+
+    <HBox alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button text="Reset Password"
+                onAction="#handleResetPasswordAction"/>
     </HBox>
     <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
     <columnConstraints>
