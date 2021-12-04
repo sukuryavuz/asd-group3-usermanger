@@ -122,6 +122,22 @@ public class CommandLine {
 
     private void handleChangePassword(User user) {
         //TODO:
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
+            String newPassword = scanner.next();
+            System.out.println("Bitte geben Sie erneut ihr neues Passwort ein: ");
+            String newPassword2 = scanner.next();
+            if (newPassword.equals(newPassword2)) {
+                userService.changePassword(user, newPassword);
+                System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
+            } else {
+                System.out.println("Die Passwörter stimmen nicht überein ");
+                printLoggedInPage(user);
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void handleDeleteAccount(User user) {
