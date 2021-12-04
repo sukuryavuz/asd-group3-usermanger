@@ -46,12 +46,13 @@ public class HelloController {
 
             try {
                 Parent root1 = (Parent) fxmlLoader.load();
-                ((SignIn)fxmlLoader.getController()).displayUserName(username.getText());
                 Stage stageNew = new Stage();
                 stageNew.setTitle("Welcome "+ username.getText());
                 stageNew.setScene(new Scene(root1));
                 stageNew.setResizable(false);
-                stageNew.showAndWait();
+                ((SignIn)fxmlLoader.getController()).displayUserName(username.getText());
+                ((SignIn)fxmlLoader.getController()).startTimer(stageNew);
+
 
                 showStage(event);
 

@@ -1,6 +1,10 @@
 package se.p1;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,22 +14,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class SignIn implements Initializable {
 
 
 
-    @FXML
-    private TextField userName;
+    @FXML private TextField userName;
+    @FXML private Text actiontarget;
 
 
     public void displayUserName(String passedUserName){
@@ -107,5 +110,29 @@ public class SignIn implements Initializable {
         }
         return properties;
     }
+
+    public void startTimer(Stage stage) {
+        final int[] timer = {5};
+        Timeline fiveSecondsWonder = new Timeline(
+                new KeyFrame(Duration.seconds(1),
+                        new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                timer[0]--;
+                                System.out.println("this is called every second on UI thread");
+                                actiontarget.setText(String.valueOf(timer[0]));
+
+
+                            }
+                        }));
+        fiveSecondsWonder.setCycleCount(5);
+        fiveSecondsWonder.play();
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        delay.setOnFinished( event -> stage.close() );
+        delay.play();
+        stage.showAndWait();
+    }
+
 
 }
