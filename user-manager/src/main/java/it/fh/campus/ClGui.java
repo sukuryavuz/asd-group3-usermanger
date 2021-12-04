@@ -17,10 +17,12 @@ public class ClGui {
 
     private void printStartPage() {
         while (true) {
-            System.out.println("Willkommen im UserManager!");
-            System.out.println("1 - Account erstellen");
-            System.out.println("2 - Login");
-            System.out.println("3 - Beenden");
+            System.out.println("""
+                    Willkommen im UserManager!
+                    1 - Account erstellen
+                    3 - Beenden
+                    2 - Login
+                    """);
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
@@ -42,14 +44,16 @@ public class ClGui {
     private void printLoggedInPage(User user) {
         while (true) {
             System.out.println("Willkommen " + user.getFirstname() + " " + user.getLastname() + "!");
-            System.out.println("1 - Log out");
-            System.out.println("2 - Passwort ändern");
-            System.out.println("3 - Account löschen");
+            System.out.println("""
+                    1 - Log out
+                    2 - Passwort ändern
+                    3 - Account löschen
+                    """);
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
                 case 1:
-                    handleLogOut();
+                    handleLogOut(user);
                     return;
                 case 2:
                     handleChangePassword(user);
@@ -105,8 +109,8 @@ public class ClGui {
         }
     }
 
-    private void handleLogOut() {
-        //TODO:
+    private void handleLogOut(User user) {
+        userService.logout(user);
     }
 
     private void handleChangePassword(User user) {
@@ -138,4 +142,5 @@ public class ClGui {
             }
         }
     }
+
 }
