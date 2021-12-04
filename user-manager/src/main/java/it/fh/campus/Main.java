@@ -9,9 +9,9 @@ public class Main {
 
         key = "superSecret123";
 
-        AES.setKey(key);
+        Rijndael.setKey(key);
         UserFileHandler.initParser();
-        new ClGui(new UserServiceImpl());
+        new CommandLine(new UserServiceImpl());
     }
 
     public static String getKey() {

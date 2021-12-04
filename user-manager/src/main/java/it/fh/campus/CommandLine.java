@@ -6,21 +6,26 @@ import it.fh.campus.service.UserService;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ClGui {
+public class CommandLine {
+
+    private int countLoginAttempts = 0;
 
     private final UserService userService;
 
-    public ClGui(UserService userService) {
+    public CommandLine(UserService userService) {
         this.userService = userService;
         printStartPage();
     }
 
     private void printStartPage() {
         while (true) {
-            System.out.println("Willkommen im UserManager!");
-            System.out.println("1 - Account erstellen");
-            System.out.println("2 - Login");
-            System.out.println("3 - Beenden");
+            System.out.println("""
+                    Willkommen im UserManager!
+                    1 - Account erstellen
+                    2 - Login
+                    3 - Beenden
+                    
+                    """);
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
@@ -42,14 +47,16 @@ public class ClGui {
     private void printLoggedInPage(User user) {
         while (true) {
             System.out.println("Willkommen " + user.getFirstname() + " " + user.getLastname() + "!");
-            System.out.println("1 - Log out");
-            System.out.println("2 - Passwort ändern");
-            System.out.println("3 - Account löschen");
+            System.out.println("""
+                    1 - Log out
+                    2 - Passwort ändern
+                    3 - Account löschen
+                    """);
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             switch (input) {
                 case 1:
-                    handleLogOut();
+                    handleLogOut(user);
                     return;
                 case 2:
                     handleChangePassword(user);
@@ -92,21 +99,25 @@ public class ClGui {
     }
 
     private void handleLogin() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
-        String username = scanner.nextLine();
-        System.out.println("Bitte geben Sie Ihr Passwort ein: ");
-        String password = scanner.nextLine();
-        User user = userService.login(username, password);
-        if (user != null) {
-            printLoggedInPage(user);
-        } else {
-            System.out.println("Username oder Passwort nicht korrekt!");
+        while (countLoginAttempts < 3){
+            printAttempt();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
+            String username = scanner.nextLine();
+            System.out.println("Bitte geben Sie Ihr Passwort ein: ");
+            String password = scanner.nextLine();
+            User user = userService.login(username, password);
+            if (user != null) {
+                countLoginAttempts = 0;
+                printLoggedInPage(user);
+            } else {
+                System.out.println("Username oder Passwort nicht korrekt!");
+            }
         }
     }
 
-    private void handleLogOut() {
-        //TODO:
+    private void handleLogOut(User user) {
+        userService.logout(user);
     }
 
     private void handleChangePassword(User user) {
@@ -138,4 +149,15 @@ public class ClGui {
             }
         }
     }
+
+    private void printAttempt() {
+        switch (countLoginAttempts) {
+            case 0 -> System.out.println("1.Versuch zum Einloggen");
+            case 1 -> System.out.println("2.Versuch zum Einloggen");
+            case 2 -> System.out.println("3.Versuch zum Einloggen");
+        }
+        countLoginAttempts++;
+
+    }
+
 }

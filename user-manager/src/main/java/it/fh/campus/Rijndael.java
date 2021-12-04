@@ -9,7 +9,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AES {
+public class Rijndael {
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
