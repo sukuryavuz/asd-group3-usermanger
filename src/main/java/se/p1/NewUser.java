@@ -36,11 +36,21 @@ public class NewUser {
 
        // setError(name,false);
 
-        System.out.println(name.getText() + " " + surname.getText() + " " + username.getText() + " " + passwordField.getText());
-        insertNewUser();
-        Node node = (Node) actionEvent.getSource();
-        Stage stageOld = (Stage) node.getScene().getWindow();
-        stageOld.close();
+        Properties props = readProperties();
+
+        boolean userExists = props.get(username.getText()) != null;
+
+        if (!userExists){
+            insertNewUser();
+            Node node = (Node) actionEvent.getSource();
+            Stage stageOld = (Stage) node.getScene().getWindow();
+            stageOld.close();
+        }else{
+            Alert userExistsAlert = new Alert(Alert.AlertType.ERROR);
+            userExistsAlert.setContentText("User existiert!");
+            userExistsAlert.show();
+        }
+
     }
 
 
@@ -103,6 +113,23 @@ public class NewUser {
         }
 
     }
+
+    private Properties readProperties(){
+        File file = new File("password.properties");
+
+        Properties properties = null;
+
+        try (FileInputStream fileInput = new FileInputStream(file)) {
+            properties = new Properties();
+            properties.load(fileInput);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
 
     /*
     public void checkName(KeyEvent keyEvent) {
