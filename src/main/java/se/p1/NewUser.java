@@ -47,7 +47,7 @@ public class NewUser {
             stageOld.close();
         }else{
             Alert userExistsAlert = new Alert(Alert.AlertType.ERROR);
-            userExistsAlert.setContentText("User existiert!");
+            userExistsAlert.setContentText("Username existiert bereits!");
             userExistsAlert.show();
         }
 
