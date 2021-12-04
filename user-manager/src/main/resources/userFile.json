@@ -1,14 +1,38 @@
 [
   {
-    "username": "Andy",
-    "password": "eGUUdZuaHUpcnMHwnL2w7g=="
+    "firstname": "Andreas",
+    "password": "eGUUdZuaHUpcnMHwnL2w7g==",
+    "lastname": "Test1",
+    "username": "Andy"
   },
   {
-    "username": "Berta",
-    "password": "USprCjCrGYQVZ8k2l2UTm5c7H+WdbD1mV7F9t5ocUFo"
+    "firstname": "Berta",
+    "password": "USprCjCrGYQVZ8k2l2UTm5c7H+WdbD1mV7F9t5ocUFo",
+    "lastname": "Test2",
+    "username": "Berta"
   },
   {
-    "username": "Claudia",
-    "password": "YTAPstLQNHLQDMA8dxTkZw=="
+    "firstname": "Claudia",
+    "password": "YTAPstLQNHLQDMA8dxTkZw==",
+    "lastname": "Test2",
+    "username": "Claudia"
+  },
+  {
+    "password": "1234",
+    "fistname": "Stipi",
+    "lastname": "Stipi",
+    "username": "Stipi"
+  },
+  {
+    "password": "zRaNireiGG1bPAYCevdp1w==",
+    "fistname": "Stipi",
+    "lastname": "Stipi",
+    "username": "Stipi2"
+  },
+  {
+    "firstname": "1",
+    "password": "C94j0P9FTjVegtUCIPCrmg==",
+    "lastname": "1",
+    "username": "Test"
   }
 ]
