@@ -2,8 +2,10 @@ package se.p1;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.Enumeration;
@@ -46,6 +48,11 @@ public class ResetPassword {
         }
 
 
+        Node node = (Node) actionEvent.getSource();
+        Stage stageOld = (Stage) node.getScene().getWindow();
+        stageOld.close();
+
+
     }
 
     private Properties readProperties(){
@@ -75,7 +82,6 @@ public class ResetPassword {
                     return true;
                 }
             }
-            return false;
         }
         return false;
     }

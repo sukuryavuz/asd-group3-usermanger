@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -59,13 +60,24 @@ public class HelloController {
                 stageNew.setTitle("Welcome "+ username.getText());
                 stageNew.setScene(new Scene(root1));
                 stageNew.setResizable(false);
-                stageNew.show();
+                stageNew.showAndWait();
+
+                showStage(event);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("username oder password nicht korrekt");
+            a.show();
         }
+    }
 
-
+    private void showStage(ActionEvent event) {
+        Node node = (Node) event.getSource();
+        Stage stageOld = (Stage) node.getScene().getWindow();
+        stageOld.show();
     }
 
     private boolean isUserValid(Properties properties, String username, String password) {
@@ -79,7 +91,6 @@ public class HelloController {
                     return true;
                 }
             }
-           return false;
         }
         return false;
     }
@@ -105,8 +116,6 @@ public class HelloController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(ResetPassword.class.getResource("reset-password.fxml"));
 
-        hideStage(actionEvent);
-
         Parent root1 = null;
         try {
             root1 = (Parent) fxmlLoader.load();
@@ -126,7 +135,7 @@ public class HelloController {
     private void hideStage(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stageOld = (Stage) node.getScene().getWindow();
-        stageOld.close();
+        stageOld.hide();
     }
 
     @FXML
