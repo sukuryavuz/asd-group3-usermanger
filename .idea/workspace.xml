@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="811670c7-cc53-4ea0-9f1f-2050dc6aa2cf" name="Changes" comment="changed access modifier back to private">
+    <list default="true" id="0dfa7bd1-968b-46af-b349-9a6ea483960d" name="Changes" comment="changed access modifier back to private">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/CommandLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/CommandLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/java/it/fh/campus/service/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-manager/src/main/resources/userFile.json" beforeDir="false" afterPath="$PROJECT_DIR$/user-manager/src/main/resources/userFile.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
