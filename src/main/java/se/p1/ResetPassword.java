@@ -3,6 +3,7 @@ package se.p1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,36 +22,45 @@ public class ResetPassword {
     private PasswordField passwordFieldOld;
     @FXML
     private PasswordField passwordFieldNew;
+    @FXML
+    private PasswordField passwordFieldNew2;
 
     public void handleResetAction(ActionEvent actionEvent) {
 
         Properties props = readProperties();
         boolean isValid = isUserValid(props,username.getText(),passwordFieldOld.getText());
 
-        if (isValid){
-            Enumeration keys = props.keys();
+        if (passwordFieldNew.equals(passwordFieldNew2)){
+            if (isValid){
+                Enumeration keys = props.keys();
 
-            while (keys.hasMoreElements()) {
-                String key = keys.nextElement().toString();
-                if (key.equals(username.getText())){
-                    props.setProperty(key,passwordFieldNew.getText());
+                while (keys.hasMoreElements()) {
+                    String key = keys.nextElement().toString();
+                    if (key.equals(username.getText())){
+                        props.setProperty(key,passwordFieldNew.getText());
+                    }
                 }
+
+                try {
+                    props.store(new FileOutputStream(new File("password.properties")),null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
-            try {
-                props.store(new FileOutputStream(new File("password.properties")),null);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
+            Node node = (Node) actionEvent.getSource();
+            Stage stageOld = (Stage) node.getScene().getWindow();
+            stageOld.close();
+        }else if(!passwordFieldNew.equals(passwordFieldNew2)){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Die 2 neu eingegebenen Passwörter stimmen nicht überein!");
+            a.show();
         }
 
-
-        Node node = (Node) actionEvent.getSource();
-        Stage stageOld = (Stage) node.getScene().getWindow();
-        stageOld.close();
 
 
     }
