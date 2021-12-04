@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -63,16 +66,30 @@ public class SignIn implements Initializable {
 
     public void handleDeleteAccountAction(ActionEvent actionEvent) {
 
-        Properties props = readProperties();
-        props.remove(userName.getText());
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
 
-        try {
-            props.store(new FileOutputStream(new File("password.properties")),null);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        confirmation.initModality(Modality.WINDOW_MODAL);
+
+        confirmation.setTitle("Delete \"" + userName.getText() + "\"?");
+        confirmation.setHeaderText("Delete \"" + userName.getText() + "\"?");
+        confirmation.setContentText("Are you sure you want to delete this?");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if(result.get() == ButtonType.OK) {
+            Properties props = readProperties();
+            props.remove(userName.getText());
+            try {
+                props.store(new FileOutputStream(new File("password.properties")),null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
     }
 
     private Properties readProperties(){
