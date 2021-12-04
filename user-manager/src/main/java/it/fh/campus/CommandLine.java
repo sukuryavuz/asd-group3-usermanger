@@ -6,11 +6,13 @@ import it.fh.campus.service.UserService;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ClGui {
+public class CommandLine {
+
+    private int countLoginAttempts = 0;
 
     private final UserService userService;
 
-    public ClGui(UserService userService) {
+    public CommandLine(UserService userService) {
         this.userService = userService;
         printStartPage();
     }
@@ -20,8 +22,9 @@ public class ClGui {
             System.out.println("""
                     Willkommen im UserManager!
                     1 - Account erstellen
-                    3 - Beenden
                     2 - Login
+                    3 - Beenden
+                    
                     """);
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
@@ -96,16 +99,20 @@ public class ClGui {
     }
 
     private void handleLogin() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
-        String username = scanner.nextLine();
-        System.out.println("Bitte geben Sie Ihr Passwort ein: ");
-        String password = scanner.nextLine();
-        User user = userService.login(username, password);
-        if (user != null) {
-            printLoggedInPage(user);
-        } else {
-            System.out.println("Username oder Passwort nicht korrekt!");
+        while (countLoginAttempts < 3){
+            printAttempt();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
+            String username = scanner.nextLine();
+            System.out.println("Bitte geben Sie Ihr Passwort ein: ");
+            String password = scanner.nextLine();
+            User user = userService.login(username, password);
+            if (user != null) {
+                countLoginAttempts = 0;
+                printLoggedInPage(user);
+            } else {
+                System.out.println("Username oder Passwort nicht korrekt!");
+            }
         }
     }
 
@@ -141,6 +148,16 @@ public class ClGui {
                     break;
             }
         }
+    }
+
+    private void printAttempt() {
+        switch (countLoginAttempts) {
+            case 0 -> System.out.println("1.Versuch zum Einloggen");
+            case 1 -> System.out.println("2.Versuch zum Einloggen");
+            case 2 -> System.out.println("3.Versuch zum Einloggen");
+        }
+        countLoginAttempts++;
+
     }
 
 }

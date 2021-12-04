@@ -1,6 +1,6 @@
 package it.fh.campus.service;
 
-import it.fh.campus.AES;
+import it.fh.campus.Rijndael;
 import it.fh.campus.Main;
 import it.fh.campus.UserFileHandler;
 import it.fh.campus.entities.User;
@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
-        User user = new User(firstname, lastname, username, AES.encrypt(password, key));
+        User user = new User(firstname, lastname, username, Rijndael.encrypt(password, key));
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.addUser(userJson);
     }
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public User login(String username, String password) {
         JSONObject userJson = UserFileHandler.findUserByUsername(username);
         User user = JsonToUserMapper.map(userJson);
-        if (user != null && password.equals(AES.decrypt(user.getPassword(), key))) {
+        if (user != null && password.equals(Rijndael.decrypt(user.getPassword(), key))) {
             //set timer
             return user;
         }
