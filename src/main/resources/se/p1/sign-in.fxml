@@ -23,6 +23,13 @@
         <Button text="Reset Password"
                 onAction="#handleResetPasswordAction"/>
     </HBox>
+
+    <HBox alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <Button text="Delete Account"
+                onAction="#handleDeleteAccountAction"/>
+    </HBox>
+
     <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
     <columnConstraints>
         <ColumnConstraints />

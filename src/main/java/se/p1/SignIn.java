@@ -11,8 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SignIn implements Initializable {
@@ -21,6 +23,7 @@ public class SignIn implements Initializable {
 
     @FXML
     private TextField userName;
+
 
     public void displayUserName(String passedUserName){
         userName.setText(passedUserName);
@@ -57,4 +60,35 @@ public class SignIn implements Initializable {
 
 
     }
+
+    public void handleDeleteAccountAction(ActionEvent actionEvent) {
+
+        Properties props = readProperties();
+        props.remove(userName.getText());
+
+        try {
+            props.store(new FileOutputStream(new File("password.properties")),null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Properties readProperties(){
+        File file = new File("password.properties");
+
+        Properties properties = null;
+
+        try (FileInputStream fileInput = new FileInputStream(file)) {
+            properties = new Properties();
+            properties.load(fileInput);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
 }
