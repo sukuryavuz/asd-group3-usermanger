@@ -24,18 +24,17 @@ public class CommandLine {
                     1 - Account erstellen
                     2 - Login
                     3 - Beenden
-                    
                     """);
             Scanner scanner = new Scanner(System.in);
-            int input = scanner.nextInt();
+            String input = scanner.next();
             switch (input) {
-                case 1:
+                case "1":
                     handleCreateAccount();
                     break;
-                case 2:
+                case "2":
                     handleLogin();
                     break;
-                case 3:
+                case "3":
                     return;
                 default:
                     System.out.println("Bitte treffen Sie eine gültige Auswahl!");
@@ -53,15 +52,15 @@ public class CommandLine {
                     3 - Account löschen
                     """);
             Scanner scanner = new Scanner(System.in);
-            int input = scanner.nextInt();
+            String input = scanner.next();
             switch (input) {
-                case 1:
+                case "1":
                     handleLogOut(user);
                     return;
-                case 2:
+                case "2":
                     handleChangePassword(user);
                     break;
-                case 3:
+                case "3":
                     handleDeleteAccount(user);
                     break;
                 default:
@@ -118,10 +117,10 @@ public class CommandLine {
 
     private void handleLogOut(User user) {
         userService.logout(user);
+        printStartPage();
     }
 
     private void handleChangePassword(User user) {
-        //TODO:
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
@@ -168,7 +167,7 @@ public class CommandLine {
 
     private void printAttempt() {
         switch (countLoginAttempts) {
-            case 0 -> System.out.println("1.Versuch zum Einloggen");
+           // case 0 -> System.out.println("1.Versuch zum Einloggen");
             case 1 -> System.out.println("2.Versuch zum Einloggen");
             case 2 -> System.out.println("3.Versuch zum Einloggen");
         }
