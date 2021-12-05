@@ -23,20 +23,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUsernameUnique(String username) {
-        return UserFileHandler.findUserByUsername(username) == null ? true : false;
+        return UserFileHandler.findUserByUsername(username) == null;
     }
 
     @Override
     public void deleteAccount(User user) throws IOException {
         JSONObject userJson = UserToJsonMapper.map(user);
-        UserFileHandler.removeUser(userJson); }
+        UserFileHandler.removeUser(userJson);
+    }
 
     @Override
     public User login(String username, String password) {
         JSONObject userJson = UserFileHandler.findUserByUsername(username);
         User user = JsonToUserMapper.map(userJson);
         if (user != null && password.equals(Rijndael.decrypt(user.getPassword(), key))) {
-            //set timer
+            //TODO: set timer
             return user;
         }
         return null;
@@ -44,16 +45,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean logout(User user) {
+        //TODO: maybe stop timer
         return false;
     }
 
     @Override
     public void changePassword(User user, String newPassword) throws IOException {
-        JSONObject userJson = UserFileHandler.findUserByUsername(user.getUsername());
-        User user2 = JsonToUserMapper.map(userJson);
-        user2.setPassword(Rijndael.encrypt(newPassword, key));
-        UserFileHandler.removeUser(userJson);
-        UserFileHandler.addUser(UserToJsonMapper.map(user2));
-
-        }
+        UserFileHandler.removeUser(UserToJsonMapper.map(user));
+        user.setPassword(Rijndael.encrypt(newPassword, key));
+        UserFileHandler.addUser(UserToJsonMapper.map(user));
+    }
 }
