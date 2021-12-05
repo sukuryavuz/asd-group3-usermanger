@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class CommandLine {
 
-    private int countLoginAttempts = 0;
-
     private final UserService userService;
 
     public CommandLine(UserService userService) {
@@ -61,7 +59,9 @@ public class CommandLine {
                     handleChangePassword(user);
                     break;
                 case "3":
-                    handleDeleteAccount(user);
+                    if (handleDeleteAccount(user)) {
+                        return;
+                    }
                     break;
                 default:
                     System.out.println("Bitte treffen Sie eine gültige Auswahl!");
@@ -98,17 +98,17 @@ public class CommandLine {
     }
 
     private void handleLogin() {
-        while (countLoginAttempts < 3){
-            printAttempt();
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        for (int countLoginAttempts = 0; countLoginAttempts < 3; countLoginAttempts++) {
+            printLoginAttempt(countLoginAttempts);
             System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
             String username = scanner.nextLine();
             System.out.println("Bitte geben Sie Ihr Passwort ein: ");
             String password = scanner.nextLine();
             User user = userService.login(username, password);
             if (user != null) {
-                countLoginAttempts = 0;
                 printLoggedInPage(user);
+                break;
             } else {
                 System.out.println("Username oder Passwort nicht korrekt!");
             }
@@ -117,62 +117,55 @@ public class CommandLine {
 
     private void handleLogOut(User user) {
         userService.logout(user);
-        printStartPage();
     }
 
     private void handleChangePassword(User user) {
-        try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
-            String newPassword = scanner.next();
-            System.out.println("Bitte geben Sie erneut ihr neues Passwort ein: ");
-            String newPassword2 = scanner.next();
-            if (newPassword.equals(newPassword2)) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
+        String newPassword = scanner.next();
+        System.out.println("Bitte geben Sie erneut ihr neues Passwort ein: ");
+        String newPassword2 = scanner.next();
+        if (newPassword.equals(newPassword2)) {
+            try {
                 userService.changePassword(user, newPassword);
-                System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
-            } else {
-                System.out.println("Die Passwörter stimmen nicht überein ");
-                printLoggedInPage(user);
+            } catch (IOException e) {
+                System.out.println("Etwas ist schief gelaufen!");
             }
-        } catch(IOException e){
-            e.printStackTrace();
+            System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
+        } else {
+            System.out.println("Die Passwörter stimmen nicht überein ");
         }
     }
 
-    public void handleDeleteAccount(User user) {
+    private boolean handleDeleteAccount(User user) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Möchten Sie Ihren Account wirklich löschen? (y oder n): ");
+        System.out.println("Möchten Sie Ihren Account wirklich löschen? (j oder n): ");
         while (true) {
             String inputDeleteAcc = scanner.next();
             switch (inputDeleteAcc) {
-                case "y":
+                case "j" -> {
                     try {
                         userService.deleteAccount(user);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Etwas ist schief gelaufen!");
                     }
                     System.out.println("Ihr Account mit dem Usernamen " + user.getUsername() + " wurde erfolgreich gelöscht");
-                    printStartPage();
-                    break;
-                case "n":
+                    return true;
+                }
+                case "n" -> {
                     System.out.println("Ihr Account wird nicht gelöscht");
-                    printLoggedInPage(user);
-                    break;
-                default:
-                    System.out.println("Bitte tippen Sie 'y' oder 'n': ");
-                    break;
+                    return false;
+                }
+                default -> System.out.println("Bitte tippen Sie 'j' oder 'n': ");
             }
         }
     }
 
-    private void printAttempt() {
+    private void printLoginAttempt(int countLoginAttempts) {
         switch (countLoginAttempts) {
-           // case 0 -> System.out.println("1.Versuch zum Einloggen");
             case 1 -> System.out.println("2.Versuch zum Einloggen");
             case 2 -> System.out.println("3.Versuch zum Einloggen");
         }
-        countLoginAttempts++;
-
     }
 
 }
