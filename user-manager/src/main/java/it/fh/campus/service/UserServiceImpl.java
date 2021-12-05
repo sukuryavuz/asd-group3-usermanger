@@ -37,16 +37,9 @@ public class UserServiceImpl implements UserService {
         JSONObject userJson = UserFileHandler.findUserByUsername(username);
         User user = JsonToUserMapper.map(userJson);
         if (user != null && password.equals(Rijndael.decrypt(user.getPassword(), key))) {
-            //TODO: set timer
             return user;
         }
         return null;
-    }
-
-    @Override
-    public boolean logout(User user) {
-        //TODO: maybe stop timer
-        return false;
     }
 
     @Override

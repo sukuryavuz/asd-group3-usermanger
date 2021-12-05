@@ -14,7 +14,5 @@ public interface UserService {
 
     User login(String username, String password);
 
-    boolean logout(User user);
-
     void changePassword(User user, String newPassword) throws IOException;
 }

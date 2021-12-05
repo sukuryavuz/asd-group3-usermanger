@@ -53,7 +53,6 @@ public class CommandLine {
             String input = scanner.next();
             switch (input) {
                 case "1":
-                    handleLogOut(user);
                     return;
                 case "2":
                     handleChangePassword(user);
@@ -79,7 +78,7 @@ public class CommandLine {
             if (userService.isUsernameUnique(username)) {
                 break;
             } else {
-                System.out.println("Username bereits vergeben!");
+                System.out.println("Username existiert bereits!");
             }
         }
         System.out.println("Geben Sie Bitte Ihren Vornamen ein: ");
@@ -115,10 +114,6 @@ public class CommandLine {
         }
     }
 
-    private void handleLogOut(User user) {
-        userService.logout(user);
-    }
-
     private void handleChangePassword(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
@@ -133,13 +128,13 @@ public class CommandLine {
             }
             System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
         } else {
-            System.out.println("Die Passwörter stimmen nicht überein ");
+            System.out.println("Kennwörter nicht gleich");
         }
     }
 
     private boolean handleDeleteAccount(User user) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Möchten Sie Ihren Account wirklich löschen? (j oder n): ");
+        System.out.println("Wollen Sie den Account wirklich löschen (j oder n): ");
         while (true) {
             String inputDeleteAcc = scanner.next();
             switch (inputDeleteAcc) {
