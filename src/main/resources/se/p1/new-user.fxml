@@ -20,7 +20,7 @@
 
     <Label  text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <TextField fx:id="username" onKeyReleased="#checkName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Label text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="4" />
 

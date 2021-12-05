@@ -30,6 +30,7 @@ public class HelloController {
     }
     @FXML private Text actiontarget;
     private int counter= 0;
+    Caeser caeser = new Caeser();
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) {
@@ -86,7 +87,8 @@ public class HelloController {
             String key = keys.nextElement().toString();
             String value = properties.getProperty(key);
             if (key.equals(username)){
-                if(value.equals(password) ){
+                String passwordEncrypted = caeser.encrypt(password);
+                if(value.equals(passwordEncrypted) ){
                     return true;
                 }
             }
@@ -110,8 +112,6 @@ public class HelloController {
         return properties;
     }
 
-
-
     private void hideStage(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stageOld = (Stage) node.getScene().getWindow();
@@ -121,7 +121,7 @@ public class HelloController {
     @FXML
     public void handleNewUserAction(ActionEvent actionEvent) {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(ResetPassword.class.getResource("new-user.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(NewUser.class.getResource("new-user.fxml"));
 
         Parent root1 = null;
         try {

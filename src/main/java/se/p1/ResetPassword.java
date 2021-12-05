@@ -16,28 +16,25 @@ import java.util.logging.Logger;
 
 public class ResetPassword {
 
-    @FXML
-    private TextField username;
-    @FXML
-    private PasswordField passwordFieldOld;
-    @FXML
-    private PasswordField passwordFieldNew;
-    @FXML
-    private PasswordField passwordFieldNew2;
+    @FXML private TextField username;
+    @FXML private PasswordField passwordFieldOld;
+    @FXML private PasswordField passwordFieldNew;
+    @FXML private PasswordField passwordFieldNew2;
+    private Caeser caeser = new Caeser();
 
     public void handleResetAction(ActionEvent actionEvent) {
 
         Properties props = readProperties();
         boolean isValid = isUserValid(props,username.getText(),passwordFieldOld.getText());
 
-        if (passwordFieldNew.equals(passwordFieldNew2)){
+        if (passwordFieldNew.getText().equals(passwordFieldNew2.getText())){
             if (isValid){
                 Enumeration keys = props.keys();
 
                 while (keys.hasMoreElements()) {
                     String key = keys.nextElement().toString();
                     if (key.equals(username.getText())){
-                        props.setProperty(key,passwordFieldNew.getText());
+                        props.setProperty(key,caeser.encrypt(passwordFieldNew.getText()));
                     }
                 }
 
@@ -55,7 +52,8 @@ public class ResetPassword {
             Node node = (Node) actionEvent.getSource();
             Stage stageOld = (Stage) node.getScene().getWindow();
             stageOld.close();
-        }else if(!passwordFieldNew.equals(passwordFieldNew2)){
+        }else if(!passwordFieldNew.getText().equals(passwordFieldNew2.getText())){
+            System.out.println(passwordFieldNew + " " + passwordFieldNew2);
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Kennwörter nicht gleich!");
             a.show();
@@ -88,7 +86,7 @@ public class ResetPassword {
             String key = keys.nextElement().toString();
             String value = properties.getProperty(key);
             if (key.equals(username)){
-                if(value.equals(password) ){
+                if(value.equals(caeser.encrypt(password)) ){
                     return true;
                 }
             }

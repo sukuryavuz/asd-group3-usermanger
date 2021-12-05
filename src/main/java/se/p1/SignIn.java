@@ -23,7 +23,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public class SignIn implements Initializable {
+public class SignIn{
 
 
 
@@ -33,11 +33,6 @@ public class SignIn implements Initializable {
 
     public void displayUserName(String passedUserName){
         userName.setText(passedUserName);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void handleLogOutAction(ActionEvent actionEvent) {
@@ -112,7 +107,7 @@ public class SignIn implements Initializable {
     }
 
     public void startTimer(Stage stage) {
-        final int[] timer = {5};
+        final int[] timer = {60};
         Timeline fiveSecondsWonder = new Timeline(
                 new KeyFrame(Duration.seconds(1),
                         new EventHandler<ActionEvent>() {
@@ -120,15 +115,14 @@ public class SignIn implements Initializable {
                             @Override
                             public void handle(ActionEvent event) {
                                 timer[0]--;
-                                System.out.println("this is called every second on UI thread");
                                 actiontarget.setText(String.valueOf(timer[0]));
 
 
                             }
                         }));
-        fiveSecondsWonder.setCycleCount(5);
+        fiveSecondsWonder.setCycleCount(60);
         fiveSecondsWonder.play();
-        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        PauseTransition delay = new PauseTransition(Duration.seconds(60));
         delay.setOnFinished( event -> stage.close() );
         delay.play();
         stage.showAndWait();
