@@ -9,13 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Test class for class Rijndael")
 class RijndaelTest {
 
-    private final String SECRET = "superSecret123";
     private final String PLAINTEXT = "Test";
     private final String CIPHERTEXT = "aY0I63EXL2PUo0aLXmdYcQ==";
 
     @BeforeEach
     void setUp(){
-        Rijndael.setKey(SECRET);
+        Rijndael.setKey();
     }
 
     @Test
@@ -24,7 +23,7 @@ class RijndaelTest {
         //Arrange
         String result;
         //Act
-        result = Rijndael.encrypt(PLAINTEXT, SECRET);
+        result = Rijndael.encrypt(PLAINTEXT);
         //Assert
         assertEquals(CIPHERTEXT, result);
     }
@@ -35,7 +34,7 @@ class RijndaelTest {
         //Arrange
         String result;
         //Act
-        result = Rijndael.decrypt(CIPHERTEXT, SECRET);
+        result = Rijndael.decrypt(CIPHERTEXT);
         //Assert
         assertEquals(PLAINTEXT, result);
     }
