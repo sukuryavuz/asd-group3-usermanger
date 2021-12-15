@@ -19,12 +19,13 @@ public class Rijndael {
     private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
     private static final int MAX_KEY_LENGTH = 16;
     private static SecretKeySpec secretKey;
+    private static String myKey = "superSecret123";
 
     private Rijndael(){
        throw new IllegalStateException("Rijndael class");
     }
 
-    public static void setKey(String myKey) {
+    public static void setKey() {
         try {
             byte[] key = myKey.getBytes(StandardCharsets.UTF_8);
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
@@ -36,9 +37,9 @@ public class Rijndael {
         }
     }
 
-    public static String encrypt(String plaintext, String secret) {
+    public static String encrypt(String plaintext) {
         try {
-            setKey(secret);
+            setKey();
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8)));
@@ -48,9 +49,9 @@ public class Rijndael {
         throw new IllegalArgumentException("Error while encrypting");
     }
 
-    public static String decrypt(String ciphertext, String secret) {
+    public static String decrypt(String ciphertext) {
         try {
-            setKey(secret);
+            setKey();
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)));
