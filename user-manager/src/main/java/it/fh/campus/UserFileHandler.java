@@ -57,7 +57,7 @@ public class UserFileHandler {
         return listOfUser.size();
     }
 
-    public static void writeToFile(){
+    private static void writeToFile(){
         try (FileWriter file = new FileWriter(pathToFile)){
             file.write(listOfUser.toJSONString());
         } catch (IOException e) {
