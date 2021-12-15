@@ -1,6 +1,8 @@
 package it.fh.campus;
 
 import it.fh.campus.service.UserServiceImpl;
+import it.fh.campus.utilities.Rijndael;
+import it.fh.campus.utilities.UserFileHandler;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package it.fh.campus;
+package it.fh.campus.utilities;
 
 import com.google.common.flogger.FluentLogger;
 

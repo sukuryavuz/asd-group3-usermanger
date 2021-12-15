@@ -1,4 +1,4 @@
-package it.fh.campus;
+package it.fh.campus.utilities;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

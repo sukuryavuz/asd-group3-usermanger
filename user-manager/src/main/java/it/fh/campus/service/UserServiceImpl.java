@@ -1,19 +1,16 @@
 package it.fh.campus.service;
 
-import it.fh.campus.Rijndael;
-import it.fh.campus.Main;
-import it.fh.campus.UserFileHandler;
+import it.fh.campus.utilities.Rijndael;
+import it.fh.campus.utilities.UserFileHandler;
 import it.fh.campus.entities.User;
 import it.fh.campus.mapper.JsonToUserMapper;
 import it.fh.campus.mapper.UserToJsonMapper;
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
-
 public class UserServiceImpl implements UserService {
 
     @Override
-    public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
+    public void createAccount(String firstname, String lastname, String username, String password) {
         User user = new User(firstname, lastname, username, Rijndael.encrypt(password));
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.addUser(userJson);
@@ -25,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteAccount(User user) throws IOException {
+    public void deleteAccount(User user) {
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.removeUser(userJson);
     }
@@ -41,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(User user, String newPassword) throws IOException {
+    public void changePassword(User user, String newPassword) {
         UserFileHandler.removeUser(UserToJsonMapper.map(user));
         user.setPassword(Rijndael.encrypt(newPassword));
         UserFileHandler.addUser(UserToJsonMapper.map(user));

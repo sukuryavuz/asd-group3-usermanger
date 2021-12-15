@@ -1,4 +1,4 @@
-package it.fh.campus;
+package it.fh.campus.utilities;
 
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
