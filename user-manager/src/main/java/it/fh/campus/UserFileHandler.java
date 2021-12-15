@@ -8,46 +8,60 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.List;
 
 public class UserFileHandler {
 
-    private static final String FILE_PATH = "user-manager/src/main/resources/userFile.json";
+    private static String pathToFile;
 
-    private static JSONArray jo;
+    private static JSONArray listOfUser;
 
-    public static void initParser() {
+    private UserFileHandler(){
+        throw new IllegalStateException("UserFileHandler class");
+    }
+
+    public static void initParser(String path) {
         try {
-            Object obj = new JSONParser().parse(new FileReader(FILE_PATH));
-            jo = (JSONArray) obj;
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            pathToFile = path;
+            Object object = new JSONParser().parse(new FileReader(path));
+            listOfUser = (JSONArray) object;
+        } catch (IOException | ParseException exception) {
+            exception.printStackTrace();
         }
     }
 
     public static JSONObject findUserByUsername(String username) {
-        for (Object o : jo) {
-            JSONObject user = (JSONObject) o;
+        for (Object object : listOfUser) {
+            JSONObject user = (JSONObject) object;
             if (username.equals(user.get("username"))) {
                 return user;
             }
         }
-        return null;
+        return (JSONObject) List.of();
     }
 
-    public static void addUser(JSONObject user) throws IOException {
-        jo.add(user);
-        FileWriter file = new FileWriter(FILE_PATH);
-        file.write(jo.toJSONString());
-        file.flush();
-        file.close();
+    public static void addUser(JSONObject user) {
+        listOfUser.add(user);
+        writeToFile();
     }
 
-    public static void removeUser(JSONObject user) throws IOException {
-        jo.remove(user);
-        FileWriter file = new FileWriter(FILE_PATH);
-        file.write(jo.toJSONString());
-        file.flush();
-        file.close();
+    public static void removeUser(JSONObject user) {
+        listOfUser.remove(user);
+        writeToFile();
+    }
+
+    public static int size(){
+        if (listOfUser.isEmpty()){
+            return 0;
+        }
+        return listOfUser.size();
+    }
+
+    public static void writeToFile(){
+        try (FileWriter file = new FileWriter(pathToFile)){
+            file.write(listOfUser.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
