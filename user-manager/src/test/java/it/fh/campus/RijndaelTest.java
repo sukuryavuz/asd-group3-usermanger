@@ -1,10 +1,12 @@
 package it.fh.campus;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Test class for class Rijndael")
 class RijndaelTest {
 
     private final String SECRET = "superSecret123";
@@ -17,6 +19,7 @@ class RijndaelTest {
     }
 
     @Test
+    @DisplayName("Test method - Encryption of a plaintext")
     void testEncrypt(){
         //Arrange
         String result;
@@ -27,6 +30,7 @@ class RijndaelTest {
     }
 
     @Test
+    @DisplayName("Test method - Decryption of a ciphertext")
     void testDecrypt(){
         //Arrange
         String result;
