@@ -12,11 +12,9 @@ import java.io.IOException;
 
 public class UserServiceImpl implements UserService {
 
-    private final String key = Main.getKey();
-
     @Override
     public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
-        User user = new User(firstname, lastname, username, Rijndael.encrypt(password, key));
+        User user = new User(firstname, lastname, username, Rijndael.encrypt(password));
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.addUser(userJson);
     }
@@ -36,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public User login(String username, String password) {
         JSONObject userJson = UserFileHandler.findUserByUsername(username);
         User user = JsonToUserMapper.map(userJson);
-        if (user != null && password.equals(Rijndael.decrypt(user.getPassword(), key))) {
+        if (user != null && password.equals(Rijndael.decrypt(user.getPassword()))) {
             return user;
         }
         return null;
@@ -45,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(User user, String newPassword) throws IOException {
         UserFileHandler.removeUser(UserToJsonMapper.map(user));
-        user.setPassword(Rijndael.encrypt(newPassword, key));
+        user.setPassword(Rijndael.encrypt(newPassword));
         UserFileHandler.addUser(UserToJsonMapper.map(user));
     }
 }
