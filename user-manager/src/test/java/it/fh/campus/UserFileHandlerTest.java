@@ -5,15 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Test class for class UserFileHandler")
 class UserFileHandlerTest {
 
-    private static final String FILE_PATH = "src/test/resources/userFileTest.json";
+    private final String FILE_PATH = "src/test/resources/userFileTest.json";
 
     @BeforeEach
     void setUp() {
@@ -21,6 +18,7 @@ class UserFileHandlerTest {
     }
 
     @Test
+    @DisplayName("Test method - Find a user with username in json file")
     void findUserByUsernameTest() {
         //Arrange
         JSONObject result;
@@ -31,7 +29,8 @@ class UserFileHandlerTest {
     }
 
     @Test
-    void addUserTest() throws IOException {
+    @DisplayName("Test method - Add a user to json file")
+    void addUserTest(){
         //Arrange
         JSONObject result = new JSONObject();
         result.put("firstname", "Lukas");
@@ -46,7 +45,8 @@ class UserFileHandlerTest {
     }
 
     @Test
-    void removeUserTest() throws IOException {
+    @DisplayName("Test method - Remove a user from json file")
+    void removeUserTest() {
         //Arrange
         int oldSize = UserFileHandler.size();
         JSONObject result = UserFileHandler.findUserByUsername("lukasm");
@@ -54,6 +54,6 @@ class UserFileHandlerTest {
         UserFileHandler.removeUser(result);
         int newSize = UserFileHandler.size();
         //Assert
-        assertTrue(oldSize == newSize + 1);
+        assertEquals(oldSize,newSize + 1);
     }
 }
