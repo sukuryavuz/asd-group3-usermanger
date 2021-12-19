@@ -5,15 +5,23 @@ import org.json.simple.JSONObject;
 
 public class UserToJsonMapper {
 
+    private static final String FIRST_NAME = "firstname";
+    private static final String LAST_NAME = "lastname";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
+    private UserToJsonMapper() { throw new IllegalStateException("UserToJsonMapper class");}
+
     public static JSONObject map(User user){
         if (user == null){
-            return null;
+            return new JSONObject();
         }
+
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("firstname", user.getFirstname());
-        jsonObject.put("lastname", user.getLastname());
-        jsonObject.put("username", user.getUsername());
-        jsonObject.put("password", user.getPassword());
+        jsonObject.put(FIRST_NAME, user.getFirstname());
+        jsonObject.put(LAST_NAME, user.getLastname());
+        jsonObject.put(USERNAME, user.getUsername());
+        jsonObject.put(PASSWORD, user.getPassword());
         return jsonObject;
     }
 }
