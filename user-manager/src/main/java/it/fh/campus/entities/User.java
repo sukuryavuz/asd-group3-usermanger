@@ -2,44 +2,28 @@ package it.fh.campus.entities;
 
 public class User {
 
-    private String firstname;
-    private String lastname;
-    private String username;
+    private final String firstName;
+    private final String lastName;
+    private final String username;
     private String password;
 
-    public User(String firstname, String lastname, String username, String password) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String firstName, String lastname, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastname;
         this.username = username;
         this.password = password;
     }
 
-    public User() {
-        // empty
-    }
-
     public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        return firstName;
     }
 
     public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+        return lastName;
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -48,5 +32,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
