@@ -4,10 +4,12 @@ import it.fh.campus.entities.User;
 import it.fh.campus.service.UserService;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class CommandLine {
 
+    private static final String WENT_WRONG_MESSAGE = "Etwas ist schief gelaufen!";
     private final UserService userService;
 
     public CommandLine(UserService userService) {
@@ -89,10 +91,10 @@ public class CommandLine {
         String password = scanner.nextLine();
         try {
             userService.createAccount(firstname, lastname, username, password);
-            User user = userService.login(username, password);
-            printLoggedInPage(user);
+            Optional<User> user = userService.login(username, password);
+            printLoggedInPage(user.orElseThrow());
         } catch (IOException e) {
-            System.out.println("Etwas ist schief gelaufen!");
+            System.out.println(WENT_WRONG_MESSAGE);
         }
     }
 
@@ -104,9 +106,9 @@ public class CommandLine {
             String username = scanner.nextLine();
             System.out.println("Bitte geben Sie Ihr Passwort ein: ");
             String password = scanner.nextLine();
-            User user = userService.login(username, password);
-            if (user != null) {
-                printLoggedInPage(user);
+            Optional<User> user = userService.login(username, password);
+            if (user.isPresent()) {
+                printLoggedInPage(user.orElseThrow());
                 break;
             } else {
                 System.out.println("Username oder Passwort nicht korrekt!");
@@ -124,7 +126,7 @@ public class CommandLine {
             try {
                 userService.changePassword(user, newPassword);
             } catch (IOException e) {
-                System.out.println("Etwas ist schief gelaufen!");
+                System.out.println(WENT_WRONG_MESSAGE);
             }
             System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
         } else {
@@ -142,7 +144,7 @@ public class CommandLine {
                     try {
                         userService.deleteAccount(user);
                     } catch (IOException e) {
-                        System.out.println("Etwas ist schief gelaufen!");
+                        System.out.println(WENT_WRONG_MESSAGE);
                     }
                     System.out.println("Ihr Account mit dem Usernamen " + user.getUsername() + " wurde erfolgreich gelöscht");
                     return true;
@@ -157,9 +159,10 @@ public class CommandLine {
     }
 
     private void printLoginAttempt(int countLoginAttempts) {
-        switch (countLoginAttempts) {
-            case 1 -> System.out.println("2.Versuch zum Einloggen");
-            case 2 -> System.out.println("3.Versuch zum Einloggen");
+        if (countLoginAttempts == 1) {
+            System.out.println("2.Versuch zum Einloggen");
+        } else {
+            System.out.println("3.Versuch zum Einloggen");
         }
     }
 
