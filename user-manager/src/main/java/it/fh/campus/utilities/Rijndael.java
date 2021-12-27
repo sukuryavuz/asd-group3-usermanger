@@ -25,7 +25,7 @@ public class Rijndael {
        throw new IllegalStateException("Rijndael class");
     }
 
-    public static void setKey() {
+    private static void setKey() {
         try {
             byte[] key = myKey.getBytes(StandardCharsets.UTF_8);
             MessageDigest sha = MessageDigest.getInstance("SHA-1");

@@ -7,34 +7,38 @@ import it.fh.campus.mapper.JsonToUserMapper;
 import it.fh.campus.mapper.UserToJsonMapper;
 import org.json.simple.JSONObject;
 
+import java.util.Optional;
+
 public class UserServiceImpl implements UserService {
 
     @Override
     public void createAccount(String firstname, String lastname, String username, String password) {
-        User user = new User(firstname, lastname, username, Rijndael.encrypt(password));
-        JSONObject userJson = UserToJsonMapper.map(user);
-        UserFileHandler.addUser(userJson);
+        UserFileHandler.addUser(UserToJsonMapper.map(new User(firstname, lastname, username, Rijndael.encrypt(password))));
     }
 
     @Override
     public boolean isUsernameUnique(String username) {
-        return UserFileHandler.findUserByUsername(username) == null;
+        return UserFileHandler.findUserByUsername(username).isEmpty();
     }
 
     @Override
     public void deleteAccount(User user) {
-        JSONObject userJson = UserToJsonMapper.map(user);
-        UserFileHandler.removeUser(userJson);
+        UserFileHandler.removeUser(UserToJsonMapper.map(user));
     }
 
     @Override
-    public User login(String username, String password) {
-        JSONObject userJson = UserFileHandler.findUserByUsername(username);
-        User user = JsonToUserMapper.map(userJson);
-        if (user != null && password.equals(Rijndael.decrypt(user.getPassword()))) {
-            return user;
+    public Optional<User> login(String username, String password) {
+
+        Optional<JSONObject> userJson = UserFileHandler.findUserByUsername(username);
+        Optional<User> user;
+        if (userJson.isPresent()) {
+            user = JsonToUserMapper.map(userJson.get());
+
+            if (user.isPresent() && password.equals(Rijndael.decrypt(user.get().getPassword()))) {
+                return user;
+            }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -43,4 +47,5 @@ public class UserServiceImpl implements UserService {
         user.setPassword(Rijndael.encrypt(newPassword));
         UserFileHandler.addUser(UserToJsonMapper.map(user));
     }
+
 }

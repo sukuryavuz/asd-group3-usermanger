@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 
 public class UserFileHandler {
 
@@ -30,14 +30,14 @@ public class UserFileHandler {
         }
     }
 
-    public static JSONObject findUserByUsername(String username) {
+    public static Optional<JSONObject> findUserByUsername(String username) {
         for (Object object : listOfUser) {
             JSONObject user = (JSONObject) object;
             if (username.equals(user.get("username"))) {
-                return user;
+                return Optional.of(user);
             }
         }
-        return (JSONObject) List.of();
+        return Optional.empty();
     }
 
     public static void addUser(JSONObject user) {
@@ -50,18 +50,19 @@ public class UserFileHandler {
         writeToFile();
     }
 
-    public static int size(){
-        if (listOfUser.isEmpty()){
-            return 0;
-        }
-        return listOfUser.size();
-    }
-
     private static void writeToFile(){
         try (FileWriter file = new FileWriter(pathToFile)){
             file.write(listOfUser.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int size(){
+        return listOfUser.size();
+    }
+
+    public static JSONArray getListOfUser(){
+        return listOfUser;
     }
 }
