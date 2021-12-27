@@ -3,6 +3,7 @@ package it.fh.campus.service;
 import it.fh.campus.entities.User;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -12,7 +13,7 @@ public interface UserService {
 
     void deleteAccount(User user) throws IOException;
 
-    User login(String username, String password);
+    Optional<User> login(String username, String password);
 
     void changePassword(User user, String newPassword) throws IOException;
 }
