@@ -23,7 +23,7 @@ class UserFileHandlerTest {
         //Arrange
         JSONObject result;
         //Act
-        result = UserFileHandler.findUserByUsername("Michael");
+        result = UserFileHandler.findUserByUsername("Michael").get();
         //Assert
         assertEquals("Schneider", result.get("lastname"));
     }
@@ -39,7 +39,7 @@ class UserFileHandlerTest {
         result.put("password", "434dsd2d");
         //Act
         UserFileHandler.addUser(result);
-        JSONObject foundUser = UserFileHandler.findUserByUsername("lukasm");
+        JSONObject foundUser = UserFileHandler.findUserByUsername("lukasm").get();
         //Assert
         assertEquals(foundUser, result);
     }
@@ -49,7 +49,7 @@ class UserFileHandlerTest {
     void removeUserTest() {
         //Arrange
         int oldSize = UserFileHandler.size();
-        JSONObject result = UserFileHandler.findUserByUsername("lukasm");
+        JSONObject result = UserFileHandler.findUserByUsername("lukasm").get();
         //Act
         UserFileHandler.removeUser(result);
         int newSize = UserFileHandler.size();
