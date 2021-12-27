@@ -1,7 +1,6 @@
 package it.fh.campus;
 
 import it.fh.campus.service.UserServiceImpl;
-import it.fh.campus.utilities.Rijndael;
 import it.fh.campus.utilities.UserFileHandler;
 
 public class Main {
@@ -10,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Rijndael.setKey();
         UserFileHandler.initParser(FILE_PATH);
         new CommandLine(new UserServiceImpl());
     }
