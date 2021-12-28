@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test class for class UserToJsonMapper")
 class UserToJsonMapperTest {
 
-    private final String FIRST_NAME_KEY = "firstname";
-    private final String FIRST_NAME_VALUE = "Max";
-    private final String LAST_NAME_KEY = "lastname";
-    private final String LAST_NAME_VALUE = "Mastermunn";
-    private final String USERNAME_KEY = "username";
-    private final String USERNAME_VALUE = "maxmustermann";
-    private final String PASSWORD_KEY = "password";
-    private final String PASSWORD_VALUE = "max123";
+    private static final String FIRST_NAME_KEY = "firstName";
+    private static final String FIRST_NAME_VALUE = "Max";
+    private static final String LAST_NAME_KEY = "lastName";
+    private static final String LAST_NAME_VALUE = "Mastermunn";
+    private static final String USERNAME_KEY = "username";
+    private static final String USERNAME_VALUE = "maxmustermann";
+    private static final String PASSWORD_KEY = "password";
+    private static final String PASSWORD_VALUE = "max123";
 
     private JSONObject jsonObject;
 

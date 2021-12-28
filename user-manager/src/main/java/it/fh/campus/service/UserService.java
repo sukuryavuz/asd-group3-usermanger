@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void createAccount(String firstname, String lastname, String username, String password) throws IOException;
+    void createAccount(String firstName, String lastName, String username, String password) throws IOException;
 
     boolean isUsernameUnique(String username);
 

@@ -12,8 +12,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public void createAccount(String firstname, String lastname, String username, String password) {
-        UserFileHandler.addUser(UserToJsonMapper.map(new User(firstname, lastname, username, Rijndael.encrypt(password))));
+    public void createAccount(String firstName, String lastName, String username, String password) {
+        UserFileHandler.addUser(UserToJsonMapper.map(new User(firstName, lastName, username, Rijndael.encrypt(password))));
     }
 
     @Override

@@ -25,7 +25,7 @@ class UserFileHandlerTest {
         //Act
         result = UserFileHandler.findUserByUsername("lukasm").orElseThrow();
         //Assert
-        assertEquals("Mustermann", result.get("lastname"));
+        assertEquals("Mustermann", result.get("lastName"));
     }
 
     @Test
@@ -34,8 +34,8 @@ class UserFileHandlerTest {
     void addUserTest(){
         //Arrange
         JSONObject result = new JSONObject();
-        result.put("firstname", "Lukas");
-        result.put("lastname", "Mustermann");
+        result.put("firstName", "Lukas");
+        result.put("lastName", "Mustermann");
         result.put("username", "lukasm");
         result.put("password", "434dsd2d");
         //Act

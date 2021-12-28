@@ -5,8 +5,8 @@ import org.json.simple.JSONObject;
 
 public class UserToJsonMapper {
 
-    private static final String FIRST_NAME = "firstname";
-    private static final String LAST_NAME = "lastname";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 

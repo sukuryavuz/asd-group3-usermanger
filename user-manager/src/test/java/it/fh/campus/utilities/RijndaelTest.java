@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Test class for class Rijndael")
 class RijndaelTest {
 
-    private final String PLAINTEXT = "Test";
-    private final String CIPHERTEXT = "aY0I63EXL2PUo0aLXmdYcQ==";
+    private static final String PLAINTEXT = "Test";
+    private static final String CIPHERTEXT = "aY0I63EXL2PUo0aLXmdYcQ==";
     private String result;
 
     @Test

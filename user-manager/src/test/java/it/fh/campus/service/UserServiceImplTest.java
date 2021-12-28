@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Test class for class UserServiceImpl")
 class UserServiceImplTest {
 
-    private final String FILE_PATH = "src/test/resources/userFileTest.json";
+    private static final String FILE_PATH = "src/test/resources/userFileTest.json";
 
     private UserServiceImpl service;
 
@@ -65,15 +65,17 @@ class UserServiceImplTest {
     @Test
     void loginTest(){
         //Act
-        Optional<User> user;
-        String username = "testtest";
-        String password = "j+lbKrzhMUBDuNm68hx28w==";
+        JSONObject user = (JSONObject) UserFileHandler.getListOfUser().get(0);
+
+        Optional<User> expectedUser;
+        String username = (String) user.get("username");
+        String password = (String) user.get("password");
 
         //Arrange
-        user = service.login(username,Rijndael.decrypt(password));
+        expectedUser = service.login(username,Rijndael.decrypt(password));
 
         //Assert
-        assertEquals(username,user.get().getUsername());
+        assertEquals(username,expectedUser.orElseThrow().getUsername());
     }
 
     @Test
@@ -93,11 +95,7 @@ class UserServiceImplTest {
     @Test
     void changePasswordTest(){
         //Act
-        JSONObject user = null;
-        for (Object object : UserFileHandler.getListOfUser()) {
-            user = (JSONObject) object;
-            break;
-        }
+        JSONObject user = (JSONObject) UserFileHandler.getListOfUser().get(0);
 
         String username = (String) user.get("username");
         String oldPassword = (String) user.get("password");
