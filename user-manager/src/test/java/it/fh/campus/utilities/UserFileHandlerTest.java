@@ -1,16 +1,15 @@
 package it.fh.campus.utilities;
 
 import org.json.simple.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Test class for class UserFileHandler")
 class UserFileHandlerTest {
 
-    private final String FILE_PATH = "src/test/resources/userFileTest.json";
+    private static final String FILE_PATH = "src/test/resources/userFileTest.json";
 
     @BeforeEach
     void setUp() {
@@ -18,17 +17,19 @@ class UserFileHandlerTest {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Test method - Find a user with username in json file")
     void findUserByUsernameTest() {
         //Arrange
         JSONObject result;
         //Act
-        result = UserFileHandler.findUserByUsername("Michael").get();
+        result = UserFileHandler.findUserByUsername("lukasm").orElseThrow();
         //Assert
-        assertEquals("Schneider", result.get("lastname"));
+        assertEquals("Mustermann", result.get("lastname"));
     }
 
     @Test
+    @Order(1)
     @DisplayName("Test method - Add a user to json file")
     void addUserTest(){
         //Arrange
@@ -39,17 +40,18 @@ class UserFileHandlerTest {
         result.put("password", "434dsd2d");
         //Act
         UserFileHandler.addUser(result);
-        JSONObject foundUser = UserFileHandler.findUserByUsername("lukasm").get();
+        JSONObject foundUser = UserFileHandler.findUserByUsername("lukasm").orElseThrow();
         //Assert
         assertEquals(foundUser, result);
     }
 
     @Test
+    @Order(3)
     @DisplayName("Test method - Remove a user from json file")
     void removeUserTest() {
         //Arrange
         int oldSize = UserFileHandler.size();
-        JSONObject result = UserFileHandler.findUserByUsername("lukasm").get();
+        JSONObject result = UserFileHandler.findUserByUsername("lukasm").orElseThrow();
         //Act
         UserFileHandler.removeUser(result);
         int newSize = UserFileHandler.size();
