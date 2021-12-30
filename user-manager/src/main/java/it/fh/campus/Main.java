@@ -1,20 +1,12 @@
 package it.fh.campus;
 
 import it.fh.campus.service.UserServiceImpl;
+import it.fh.campus.utils.UserFileHandler;
 
 public class Main {
-    static String key;
 
     public static void main(String[] args) {
-
-        key = "superSecret123";
-
-        Rijndael.setKey(key);
-        UserFileHandler.initParser();
+        UserFileHandler.setFilePath("user-manager/src/main/resources/userFile.json");
         new CommandLine(new UserServiceImpl());
-    }
-
-    public static String getKey() {
-        return key;
     }
 }
