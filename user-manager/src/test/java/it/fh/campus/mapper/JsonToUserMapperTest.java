@@ -37,8 +37,8 @@ class JsonToUserMapperTest {
 
         //Assert
         assertAll(()->{
-            assertEquals(FIRST_NAME_VALUE,user.get().getFirstname());
-            assertEquals(LAST_NAME_VALUE, user.get().getLastname());
+            assertEquals(FIRST_NAME_VALUE,user.get().getFirstName());
+            assertEquals(LAST_NAME_VALUE, user.get().getLastName());
             assertEquals(USERNAME_VALUE, user.get().getUsername());
             assertEquals(PASSWORD_VALUE, user.get().getPassword());
         });

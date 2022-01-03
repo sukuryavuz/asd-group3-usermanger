@@ -45,7 +45,7 @@ public class CommandLine {
 
     private void printLoggedInPage(User user) {
         while (true) {
-            System.out.println("Willkommen " + user.getFirstname() + " " + user.getLastname() + "!");
+            System.out.println("Willkommen " + user.getFirstName() + " " + user.getLastName() + "!");
             System.out.println("""
                     1 - Log out
                     2 - Passwort ändern

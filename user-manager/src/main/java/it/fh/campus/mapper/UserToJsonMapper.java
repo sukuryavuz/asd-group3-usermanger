@@ -18,8 +18,8 @@ public class UserToJsonMapper {
         }
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(FIRST_NAME, user.getFirstname());
-        jsonObject.put(LAST_NAME, user.getLastname());
+        jsonObject.put(FIRST_NAME, user.getFirstName());
+        jsonObject.put(LAST_NAME, user.getLastName());
         jsonObject.put(USERNAME, user.getUsername());
         jsonObject.put(PASSWORD, user.getPassword());
         return jsonObject;
