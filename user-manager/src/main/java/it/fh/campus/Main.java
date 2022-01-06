@@ -2,19 +2,13 @@ package it.fh.campus;
 
 import it.fh.campus.service.UserServiceImpl;
 
-public class Main {
-    static String key;
+import static it.fh.campus.Init.initializeUserManager;
 
+public class Main {
     public static void main(String[] args) {
 
-        key = "superSecret123";
-
-        Rijndael.setKey(key);
-        UserFileHandler.initParser();
-        new CommandLine(new UserServiceImpl());
+      initializeUserManager();
+      new CommandLine(new UserServiceImpl());
     }
 
-    public static String getKey() {
-        return key;
-    }
 }

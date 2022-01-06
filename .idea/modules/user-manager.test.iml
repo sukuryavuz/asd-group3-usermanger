@@ -3,7 +3,9 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
     <output-test url="file://$MODULE_DIR$/../../user-manager/build/classes/java/test" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../user-manager/src/test" />
+    <content url="file://$MODULE_DIR$/../../user-manager/src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../user-manager/src/test/java" isTestSource="true" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="user-manager.main" />

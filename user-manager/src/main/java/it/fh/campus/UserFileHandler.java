@@ -8,26 +8,27 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
+
 
 public class UserFileHandler {
 
     private static final String FILE_PATH = "user-manager/src/main/resources/userFile.json";
+    //private static final String FILE_PATH = "C:\\Users\\Zorana FH\\Desktop\\Master_SDE\\Projekte\\ASD\\user-manager-git\\user-manager\\src\\main\\resources\\userFile.json";
 
-    private static JSONArray jo;
+    private static JSONArray jsonUserArray;
 
     public static void initParser() {
         try {
-            Object obj = new JSONParser().parse(new FileReader(FILE_PATH));
-            jo = (JSONArray) obj;
+            Object userFileObject = new JSONParser().parse(new FileReader(FILE_PATH));
+            jsonUserArray = (JSONArray) userFileObject;
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
     public static JSONObject findUserByUsername(String username) {
-        for (Object o : jo) {
-            JSONObject user = (JSONObject) o;
+        for (Object userObject : jsonUserArray) {
+            JSONObject user = (JSONObject) userObject;
             if (username.equals(user.get("username"))) {
                 return user;
             }
@@ -36,18 +37,18 @@ public class UserFileHandler {
     }
 
     public static void addUser(JSONObject user) throws IOException {
-        jo.add(user);
-        FileWriter file = new FileWriter(FILE_PATH);
-        file.write(jo.toJSONString());
-        file.flush();
-        file.close();
+        jsonUserArray.add(user);
+        FileWriter userFile = new FileWriter(FILE_PATH);
+        userFile.write(jsonUserArray.toJSONString());
+        userFile.flush();
+        userFile.close();
     }
 
     public static void removeUser(JSONObject user) throws IOException {
-        jo.remove(user);
-        FileWriter file = new FileWriter(FILE_PATH);
-        file.write(jo.toJSONString());
-        file.flush();
-        file.close();
+        jsonUserArray.remove(user);
+        FileWriter userFile = new FileWriter(FILE_PATH);
+        userFile.write(jsonUserArray.toJSONString());
+        userFile.flush();
+        userFile.close();
     }
 }

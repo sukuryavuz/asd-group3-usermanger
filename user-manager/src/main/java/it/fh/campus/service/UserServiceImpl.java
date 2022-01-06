@@ -1,5 +1,6 @@
 package it.fh.campus.service;
 
+import it.fh.campus.Init;
 import it.fh.campus.Rijndael;
 import it.fh.campus.Main;
 import it.fh.campus.UserFileHandler;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class UserServiceImpl implements UserService {
 
-    private final String key = Main.getKey();
+    private final String key = Init.getKey();
 
     @Override
     public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
