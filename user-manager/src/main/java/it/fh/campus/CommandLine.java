@@ -4,12 +4,22 @@ import it.fh.campus.entities.User;
 import it.fh.campus.service.UserService;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class CommandLine {
 
     private static final String WENT_WRONG_MESSAGE = "Etwas ist schief gelaufen!";
+    private static final String CREATE_ACCOUNT = "1";
+    private static final String LOGIN = "2";
+    private static final String EXIT = "3";
+    private static final String LOGOUT = "1";
+    private static final String CHANGE_PASSWORD = "2";
+    private static final String DELETE_ACCOUNT = "3";
+    private static final String DELETE_ACCOUNT_YES = "j";
+    private static final String DELETE_ACCOUNT_NO = "n";
+
     private final UserService userService;
 
     public CommandLine(UserService userService) {
@@ -25,16 +35,16 @@ public class CommandLine {
                     2 - Login
                     3 - Beenden
                     """);
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
             String input = scanner.next();
             switch (input) {
-                case "1":
+                case CREATE_ACCOUNT:
                     handleCreateAccount();
                     break;
-                case "2":
+                case LOGIN:
                     handleLogin();
                     break;
-                case "3":
+                case EXIT:
                     return;
                 default:
                     System.out.println("Bitte treffen Sie eine gültige Auswahl!");
@@ -51,15 +61,15 @@ public class CommandLine {
                     2 - Passwort ändern
                     3 - Account löschen
                     """);
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
             String input = scanner.next();
             switch (input) {
-                case "1":
+                case LOGOUT:
                     return;
-                case "2":
+                case CHANGE_PASSWORD:
                     handleChangePassword(user);
                     break;
-                case "3":
+                case DELETE_ACCOUNT:
                     if (handleDeleteAccount(user)) {
                         return;
                     }
@@ -72,7 +82,7 @@ public class CommandLine {
     }
 
     private void handleCreateAccount() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         String username;
         while (true) {
             System.out.println("Geben Sie Bitte einen Usernamen ein: ");
@@ -99,7 +109,7 @@ public class CommandLine {
     }
 
     private void handleLogin() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         for (int countLoginAttempts = 0; countLoginAttempts < 3; countLoginAttempts++) {
             printLoginAttempt(countLoginAttempts);
             System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
@@ -117,7 +127,7 @@ public class CommandLine {
     }
 
     private void handleChangePassword(User user) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
         String newPassword = scanner.next();
         System.out.println("Bitte geben Sie erneut ihr neues Passwort ein: ");
@@ -135,12 +145,12 @@ public class CommandLine {
     }
 
     private boolean handleDeleteAccount(User user) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.println("Wollen Sie den Account wirklich löschen (j oder n): ");
         while (true) {
             String inputDeleteAcc = scanner.next();
             switch (inputDeleteAcc) {
-                case "j" -> {
+                case DELETE_ACCOUNT_YES -> {
                     try {
                         userService.deleteAccount(user);
                     } catch (IOException e) {
@@ -149,7 +159,7 @@ public class CommandLine {
                     System.out.println("Ihr Account mit dem Usernamen " + user.getUsername() + " wurde erfolgreich gelöscht");
                     return true;
                 }
-                case "n" -> {
+                case DELETE_ACCOUNT_NO -> {
                     System.out.println("Ihr Account wird nicht gelöscht");
                     return false;
                 }
