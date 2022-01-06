@@ -54,7 +54,7 @@ public class Rijndael {
             setKey();
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)), StandardCharsets.UTF_8);
         } catch (Exception exception) {
             logger.at(Level.SEVERE).log("Error while decrypting: %s" + exception);
         }
