@@ -1,51 +1,53 @@
 package it.fh.campus.service;
 
-import it.fh.campus.Rijndael;
-import it.fh.campus.Main;
-import it.fh.campus.UserFileHandler;
+import it.fh.campus.utils.Rijndael;
+import it.fh.campus.utils.UserFileHandler;
 import it.fh.campus.entities.User;
+import it.fh.campus.exceptions.UserNameNotUniqueException;
+import it.fh.campus.exceptions.UserNameOrPasswordNotCorrectException;
 import it.fh.campus.mapper.JsonToUserMapper;
 import it.fh.campus.mapper.UserToJsonMapper;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private final String key = Main.getKey();
-
     @Override
-    public void createAccount(String firstname, String lastname, String username, String password) throws IOException {
-        User user = new User(firstname, lastname, username, Rijndael.encrypt(password, key));
+    public User createAccount(String firstName, String lastName, String userName, String password) throws IOException, ParseException {
+        User user = new User(firstName, lastName, userName, Rijndael.encrypt(password));
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.addUser(userJson);
+        return user;
     }
 
     @Override
-    public boolean isUsernameUnique(String username) {
-        return UserFileHandler.findUserByUsername(username) == null;
+    public void checkUserNameUnique(String userName) throws IOException, ParseException, UserNameNotUniqueException {
+        UserFileHandler.findUserByUsername(userName).ifPresent(user1 -> {throw new UserNameNotUniqueException();});
     }
 
     @Override
-    public void deleteAccount(User user) throws IOException {
+    public void deleteAccount(User user) throws IOException, ParseException {
         JSONObject userJson = UserToJsonMapper.map(user);
         UserFileHandler.removeUser(userJson);
     }
 
     @Override
-    public User login(String username, String password) {
-        JSONObject userJson = UserFileHandler.findUserByUsername(username);
-        User user = JsonToUserMapper.map(userJson);
-        if (user != null && password.equals(Rijndael.decrypt(user.getPassword(), key))) {
-            return user;
+    public User login(String userName, String password) throws UserNameOrPasswordNotCorrectException, IOException, ParseException {
+        Optional<JSONObject> userJson = UserFileHandler.findUserByUsername(userName);
+        Optional<User> user = JsonToUserMapper.map(userJson);
+        if (user.isPresent() && password.equals(Rijndael.decrypt(user.get().getPassword()))) {
+            return user.get();
         }
-        return null;
+        throw new UserNameOrPasswordNotCorrectException();
     }
 
     @Override
-    public void changePassword(User user, String newPassword) throws IOException {
+    public void changePassword(User user, String newPassword) throws IOException, ParseException {
         UserFileHandler.removeUser(UserToJsonMapper.map(user));
-        user.setPassword(Rijndael.encrypt(newPassword, key));
+        user.setPassword(Rijndael.encrypt(newPassword));
         UserFileHandler.addUser(UserToJsonMapper.map(user));
     }
 }

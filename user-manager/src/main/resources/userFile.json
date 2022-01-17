@@ -1,1 +1,20 @@
-[{"firstname":"Andreas","password":"eGUUdZuaHUpcnMHwnL2w7g==","lastname":"Test1","username":"Andy"},{"firstname":"Berta","password":"USprCjCrGYQVZ8k2l2UTm5c7H+WdbD1mV7F9t5ocUFo","lastname":"Test2","username":"Berta"},{"firstname":"Claudia","password":"YTAPstLQNHLQDMA8dxTkZw==","lastname":"Test2","username":"Claudia"},{"password":"1234","fistname":"Stipi","lastname":"Stipi","username":"Stipi"},{"password":"zRaNireiGG1bPAYCevdp1w==","fistname":"Stipi","lastname":"Stipi","username":"Stipi2"},{"firstname":"1","password":"C94j0P9FTjVegtUCIPCrmg==","lastname":"1","username":"Test"},{"firstname":"sukur","password":null,"lastname":"sukur","username":"sukur"},{"firstname":"suekuer","password":"W0kUU5nGjATVm5aCTeqDrA==","lastname":"suekuer","username":"suekuer"},{"firstname":"suekuerr","password":"jIZFssrmqiyoDrQEgBLbTQ==","lastname":"suekuerr","username":"suekuerr"},{"firstname":"testtest","password":"j+lbKrzhMUBDuNm68hx28w==","lastname":"testtest","username":"testtest"}]
+[
+  {
+    "firstName": "Andreas",
+    "lastName": "Test1",
+    "password": "eGUUdZuaHUpcnMHwnL2w7g==",
+    "userName": "Andy"
+  },
+  {
+    "firstName": "Berta",
+    "lastName": "Test2",
+    "password": "USprCjCrGYQVZ8k2l2UTm5c7H+WdbD1mV7F9t5ocUFo=",
+    "userName": "Berta"
+  },
+  {
+    "firstName": "Claudia",
+    "lastName": "Test2",
+    "password": "YTAPstLQNHLQDMA8dxTkZw==",
+    "userName": "Claudia"
+  }
+]

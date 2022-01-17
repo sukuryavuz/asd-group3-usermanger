@@ -1,12 +1,26 @@
 package it.fh.campus;
 
 import it.fh.campus.entities.User;
+import it.fh.campus.exceptions.UserNameNotUniqueException;
+import it.fh.campus.exceptions.UserNameOrPasswordNotCorrectException;
 import it.fh.campus.service.UserService;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class CommandLine {
+
+    public static final String CREATE_ACCOUNT_CASE = "1";
+    public static final String LOGIN_CASE = "2";
+    public static final String QUIT_CASE = "3";
+    public static final String LOGOUT_CASE = "1";
+    public static final String CHANGE_PASSWORD_CASE = "2";
+    public static final String DELETE_ACCOUNT_CASE = "3";
+    public static final String MSG_STH_WENT_WRONG = "Etwas ist schief gelaufen!";
+    public static final String MSG_CHOOSE_VALID_SELECTION = "Bitte treffen Sie eine gültige Auswahl!";
+    public static final String DELETE_ACCOUNT_JA = "j";
+    public static final String DELETE_ACCOUNT_NEIN = "n";
 
     private final UserService userService;
 
@@ -26,16 +40,16 @@ public class CommandLine {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.next();
             switch (input) {
-                case "1":
+                case CREATE_ACCOUNT_CASE:
                     handleCreateAccount();
                     break;
-                case "2":
+                case LOGIN_CASE:
                     handleLogin();
                     break;
-                case "3":
+                case QUIT_CASE:
                     return;
                 default:
-                    System.out.println("Bitte treffen Sie eine gültige Auswahl!");
+                    System.out.println(MSG_CHOOSE_VALID_SELECTION);
                     break;
             }
         }
@@ -43,7 +57,7 @@ public class CommandLine {
 
     private void printLoggedInPage(User user) {
         while (true) {
-            System.out.println("Willkommen " + user.getFirstname() + " " + user.getLastname() + "!");
+            System.out.println("Willkommen " + user.getFirstName() + " " + user.getLastName() + "!");
             System.out.println("""
                     1 - Log out
                     2 - Passwort ändern
@@ -52,18 +66,23 @@ public class CommandLine {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.next();
             switch (input) {
-                case "1":
+                case LOGOUT_CASE:
                     return;
-                case "2":
+                case CHANGE_PASSWORD_CASE:
                     handleChangePassword(user);
                     break;
-                case "3":
-                    if (handleDeleteAccount(user)) {
-                        return;
+                case DELETE_ACCOUNT_CASE:
+                    handleDeleteAccount(user);
+                    try {
+                        userService.checkUserNameUnique(user.getUserName());
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
+                    } catch (UserNameNotUniqueException e){
+                        break;
                     }
-                    break;
+                    return;
                 default:
-                    System.out.println("Bitte treffen Sie eine gültige Auswahl!");
+                    System.out.println(MSG_CHOOSE_VALID_SELECTION);
                     break;
             }
         }
@@ -71,60 +90,72 @@ public class CommandLine {
 
     private void handleCreateAccount() {
         Scanner scanner = new Scanner(System.in);
-        String username;
-        while (true) {
-            System.out.println("Geben Sie Bitte einen Usernamen ein: ");
-            username = scanner.nextLine();
-            if (userService.isUsernameUnique(username)) {
-                break;
-            } else {
-                System.out.println("Username existiert bereits!");
-            }
-        }
+        String userName = getUniqueUserName();
         System.out.println("Geben Sie Bitte Ihren Vornamen ein: ");
-        String firstname = scanner.nextLine();
+        String firstName = scanner.nextLine();
         System.out.println("Geben Sie Bitte Ihren Nachnamen ein: ");
-        String lastname = scanner.nextLine();
+        String lastName = scanner.nextLine();
         System.out.println("Geben Sie Bitte Ihr Passwort ein: ");
         String password = scanner.nextLine();
+        createAccount(userName, firstName, lastName, password);
+    }
+
+    private void createAccount(String userName, String firstName, String lastName, String password) {
         try {
-            userService.createAccount(firstname, lastname, username, password);
-            User user = userService.login(username, password);
+            User user = userService.createAccount(firstName, lastName, userName, password);
             printLoggedInPage(user);
-        } catch (IOException e) {
-            System.out.println("Etwas ist schief gelaufen!");
+        } catch (IOException | ParseException e) {
+            System.out.println(MSG_STH_WENT_WRONG);
+        }
+    }
+
+    private String getUniqueUserName() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Geben Sie Bitte einen Usernamen ein: ");
+            String username = scanner.nextLine();
+            try {
+                userService.checkUserNameUnique(username);
+                return username;
+            } catch (IOException | ParseException e) {
+                System.out.println(MSG_STH_WENT_WRONG);
+            } catch (UserNameNotUniqueException e) {
+                System.out.println("Username existiert bereits!");
+            }
         }
     }
 
     private void handleLogin() {
         Scanner scanner = new Scanner(System.in);
-        for (int countLoginAttempts = 0; countLoginAttempts < 3; countLoginAttempts++) {
-            printLoginAttempt(countLoginAttempts);
+        for (int countLoginAttempts = 1; countLoginAttempts < 4; countLoginAttempts++) {
+            System.out.println(countLoginAttempts + ". Versuch zum Einloggen");
             System.out.println("Bitte geben Sie Ihren Usernamen ein: ");
             String username = scanner.nextLine();
             System.out.println("Bitte geben Sie Ihr Passwort ein: ");
             String password = scanner.nextLine();
-            User user = userService.login(username, password);
-            if (user != null) {
-                printLoggedInPage(user);
-                break;
-            } else {
+            try {
+                printLoggedInPage(userService.login(username, password));
+                return;
+            } catch (UserNameOrPasswordNotCorrectException e) {
                 System.out.println("Username oder Passwort nicht korrekt!");
+            } catch (IOException | ParseException e) {
+                System.out.println(MSG_STH_WENT_WRONG);
             }
         }
+
     }
 
     private void handleChangePassword(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bitte geben Sie ihr neues Passwort ein: ");
-        String newPassword = scanner.next();
+        String newPassword1 = scanner.next();
         System.out.println("Bitte geben Sie erneut ihr neues Passwort ein: ");
         String newPassword2 = scanner.next();
-        if (newPassword.equals(newPassword2)) {
+        if (newPassword1.equals(newPassword2)) {
             try {
-                userService.changePassword(user, newPassword);
-            } catch (IOException e) {
-                System.out.println("Etwas ist schief gelaufen!");
+                userService.changePassword(user, newPassword1);
+            } catch (IOException | ParseException e) {
+                System.out.println(MSG_STH_WENT_WRONG);
             }
             System.out.println("Ihr neues Passwort wurde erfolgreich aktualisiert! ");
         } else {
@@ -132,35 +163,26 @@ public class CommandLine {
         }
     }
 
-    private boolean handleDeleteAccount(User user) {
+    private void handleDeleteAccount(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wollen Sie den Account wirklich löschen (j oder n): ");
         while (true) {
             String inputDeleteAcc = scanner.next();
             switch (inputDeleteAcc) {
-                case "j" -> {
+                case DELETE_ACCOUNT_JA:
                     try {
                         userService.deleteAccount(user);
-                    } catch (IOException e) {
-                        System.out.println("Etwas ist schief gelaufen!");
+                    } catch (IOException | ParseException e) {
+                        System.out.println(MSG_STH_WENT_WRONG);
                     }
-                    System.out.println("Ihr Account mit dem Usernamen " + user.getUsername() + " wurde erfolgreich gelöscht");
-                    return true;
-                }
-                case "n" -> {
+                    System.out.println("Ihr Account mit dem Usernamen " + user.getUserName() + " wurde erfolgreich gelöscht");
+                    return;
+                case DELETE_ACCOUNT_NEIN:
                     System.out.println("Ihr Account wird nicht gelöscht");
-                    return false;
-                }
-                default -> System.out.println("Bitte tippen Sie 'j' oder 'n': ");
+                    return;
+                default:
+                    System.out.println("Bitte tippen Sie 'j' oder 'n': ");
             }
         }
     }
-
-    private void printLoginAttempt(int countLoginAttempts) {
-        switch (countLoginAttempts) {
-            case 1 -> System.out.println("2.Versuch zum Einloggen");
-            case 2 -> System.out.println("3.Versuch zum Einloggen");
-        }
-    }
-
 }
